@@ -1,866 +1,392 @@
 <div align="center">
 
-<img width="" src="fastlane/metadata/android/en-US/images/icon.png"  width=160 height=160  align="center">
+<br/>
 
-# Cortex DL
+# ⚡ Cortex DL — Android
 
-### 🎬 Advanced Video/Audio Downloader for Android
+### Advanced Video & Audio Downloader for Android
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/MaheshTechnicals/Cortex DL?color=black&label=Latest%20Release&logo=github)](https://github.com/MaheshTechnicals/Cortex DL/releases/latest/)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/MaheshTechnicals/Cortex DL?include_prereleases&label=Preview&logo=Github)](https://github.com/MaheshTechnicals/Cortex DL/releases/)
-[![Keep a Changelog](https://img.shields.io/badge/Changelog-lightgray?style=flat&color=gray&logo=keep-a-changelog)](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-[![GitHub all releases](https://img.shields.io/github/downloads/MaheshTechnicals/Cortex DL/total?label=Downloads&logo=github)](https://github.com/MaheshTechnicals/Cortex DL/releases/)
-[![GitHub Repo stars](https://img.shields.io/github/stars/MaheshTechnicals/Cortex DL?style=flat&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIC05NjAgOTYwIDk2MCIgd2lkdGg9IjI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGQ9Im0zNTQtMjQ3IDEyNi03NiAxMjYgNzctMzMtMTQ0IDExMS05Ni0xNDYtMTMtNTgtMTM2LTU4IDEzNS0xNDYgMTMgMTExIDk3LTMzIDE0M1pNMjMzLTgwbDY1LTI4MUw4MC01NTBsMjg4LTI1IDExMi0yNjUgMTEyIDI2NSAyODggMjUtMjE4IDE4OSA2NSAyODEtMjQ3LTE0OUwyMzMtODBabTI0Ny0zNTBaIiBzdHlsZT0iZmlsbDogcmdiKDI0NSwgMjI3LCA2Nik7Ii8%2BCjwvc3ZnPg%3D%3D&color=%23f8e444)](https://github.com/MaheshTechnicals/Cortex DL/stargazers)
-[![Supported-Sites](https://img.shields.io/badge/1000%2B%20Sites-9cf?style=flat&logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0cHgiIGZpbGw9IiNGRkZGRkYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+CiAgPHBhdGggZD0iTTExLjk5IDJDNi40NyAyIDIgNi40OCAyIDEyczQuNDcgMTAgOS45OSAxMEMxNy41MiAyMiAyMiAxNy41MiAyMiAxMlMxNy41MiAyIDExLjk5IDJ6bTYuOTMgNmgtMi45NWMtLjMyLTEuMjUtLjc4LTIuNDUtMS4zOC0zLjU2IDEuODQuNjMgMy4zNyAxLjkxIDQuMzMgMy41NnpNMTIgNC4wNGMuODMgMS4yIDEuNDggMi41MyAxLjkxIDMuOTZoLTMuODJjLjQzLTEuNDMgMS4wOC0yLjc2IDEuOTEtMy45NnpNNC4yNiAxNEM0LjEgMTMuMzYgNCAxMi42OSA0IDEycy4xLTEuMzYuMjYtMmgzLjM4Yy0uMDguNjYtLjE0IDEuMzItLjE0IDJzLjA2IDEuMzQuMTQgMkg0LjI2em0uODIgMmgyLjk1Yy4zMiAxLjI1Ljc4IDIuNDUgMS4zOCAzLjU2LTEuODQtLjYzLTMuMzctMS45LTQuMzMtMy41NnptMi45NS04SDUuMDhjLjk2LTEuNjYgMi40OS0yLjkzIDQuMzMtMy41NkM4LjgxIDUuNTUgOC4zNSA2Ljc1IDguMDMgOHpNMTIgMTkuOTZjLS44My0xLjItMS40OC0yLjUzLTEuOTEtMy45NmgzLjgyYy0uNDMgMS40My0xLjA4IDIuNzYtMS45MSAzLjk2ek0xNC4zNCAxNEg5LjY2Yy0uMDktLjY2LS4xNi0xLjMyLS4xNi0ycy4wNy0xLjM1LjE2LTJoNC42OGMuMDkuNjUuMTYgMS4zMi4xNiAycy0uMDcgMS4zNC0uMTYgMnptLjI1IDUuNTZjLjYtMS4xMSAxLjA2LTIuMzEgMS4zOC0zLjU2aDIuOTVjLS45NiAxLjY1LTIuNDkgMi45My00LjMzIDMuNTZ6TTE2LjM2IDE0Yy4wOC0uNjYuMTQtMS4zMi4xNC0ycy0uMDYtMS4zNC0uMTQtMmgzLjM4Yy4xNi42NC4yNiAxLjMxLjI2IDJzLS4xIDEuMzYtLjI2IDJoLTMuMzh6IiBzdHlsZT0iZmlsbDogcmdiKDE2MiwgMTk4LCAyMzQpOyIvPgo8L3N2Zz4=&label=Supported)](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
-[![Android API](https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=24)
-[![License](https://img.shields.io/github/license/JunkFood02/Seal?style=flat&color=blue)](https://github.com/JunkFood02/Seal/blob/main/LICENSE)
-
-**Cortex DL** is a powerful, premium video and audio downloader for Android. Built on the solid foundation of [Seal](https://github.com/JunkFood02/Seal) by [JunkFood02](https://github.com/JunkFood02), this enhanced version features exclusive premium UI themes, advanced functionality, and cutting-edge Material Design 3 implementation.
-
-### 🌟 What Makes Cortex DL Special?
-
-- **🎨 Exclusive Gradient Dark Theme**: Premium glassmorphism UI with vibrant gradients
-- **⚡ Auto-Update System**: Seamless in-app updates from our release page
-- **🎯 Enhanced Repository**: Active maintenance and improvements by [Mahesh Technicals](https://github.com/MaheshTechnicals)
-- **💎 Modern Architecture**: Latest Android SDK 37, Kotlin 2.3, Jetpack Compose, yt-dlp 2025.12.08
-- **🚀 Performance Optimized**: Hardware-accelerated animations, ultra-fast downloads with speed optimization, advanced aria2c support
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.3.21-7F52FF?style=flat&logo=kotlin&logoColor=white)](https://kotlinlang.org)
+[![Compose BOM](https://img.shields.io/badge/Jetpack%20Compose-2026.05.01-4285F4?style=flat&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
+[![Android SDK](https://img.shields.io/badge/SDK-24%20→%2037-3DDC84?style=flat&logo=android&logoColor=white)](https://developer.android.com)
+[![License](https://img.shields.io/badge/License-GPL--3.0-blue?style=flat&logo=gnu)](LICENSE)
+[![yt-dlp](https://img.shields.io/badge/yt--dlp-2025.12.08-FF0000?style=flat&logo=youtube&logoColor=white)](https://github.com/yt-dlp/yt-dlp)
+[![Gradle](https://img.shields.io/badge/Gradle-9.5.1-02303A?style=flat&logo=gradle)](https://gradle.org)
 
 ---
 
-### 🌍 Language Support
-
-English
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-zh_Hans.md">简体中文</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-zh_Hant.md">繁體中文</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-ar.md">العربية</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-pt.md">Portuguese</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-ua.md">Українська</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-th.md">ภาษาไทย</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-fa.md">فارسی</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-it.md">Italiano</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-ja.md">日本語</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-hi.md">हिंदी</a>
-&nbsp;&nbsp;| &nbsp;&nbsp;
-<a href="https://github.com/JunkFood02/Seal/blob/main/translations/README-bn.md">বাংলা</a>
+**Cortex DL** is a powerful, open-source video and audio downloader for Android.  
+Built on top of [Seal](https://github.com/JunkFood02/Seal) by [JunkFood02](https://github.com/JunkFood02), enhanced with an exclusive **Gradient Dark Theme**, an **Auto-Update System**, and a completely modernized tech stack.
 
 </div>
 
+---
 
-## 📱 Screenshots
+## 🧰 Tech Stack & Tools Used
 
-<div align="center">
-<div>
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg" width="30%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="30%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg" width="30%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg" width="30%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.jpg" width="30%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.jpg" width="30%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/7.jpg" width="30%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/8.jpg" width="30%" />
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/9.jpg" width="30%" />
-</div>
-</div>
+> Full breakdown of every technology, library, and tool powering this project.
 
-<br>
+### 🖥️ Language & Compiler
 
-## ✨ Key Features
-
-### � Premium UI & Theming
-- **Gradient Dark Theme** ⭐ *Exclusive to Cortex DL*
-  - Deep charcoal/obsidian backgrounds (#0A0A0F, #14141F) perfect for OLED displays
-  - Vibrant linear gradients with blues (#5B47E5) and purples (#8B5CF6)
-  - Sophisticated glassmorphism effects with backdrop blur
-  - Premium card-based layouts with smooth 60fps animations
-  - WCAG AA compliant contrast ratios for accessibility
-  - Toggle on/off in Settings → Look & Feel
-
-- **Material Design 3**: Beautiful, modern UI
-  - System-wide dynamic colors (Android 12+)
-  - Dark/Light/Gradient Dark theme options
-  - Smooth micro-animations and transitions
-  - Premium component library
-
-### 🎯 Core Download Capabilities
-- **Universal Downloader**: Support for 1000+ platforms via [yt-dlp](https://github.com/yt-dlp/yt-dlp)
-  - YouTube, Instagram, TikTok, Twitter, Facebook, Vimeo, Dailymotion
-  - Reddit, Twitch, SoundCloud, Bandcamp, and many more
-  - [View full list of supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
-  
-- **High-Quality Audio Extraction**
-  - Extract audio with metadata embedding via [mutagen](https://github.com/quodlibet/mutagen)
-  - Automatic thumbnail and metadata integration
-  - Multiple formats: MP3, M4A, OPUS, FLAC, WAV
-  - Configurable bitrate and quality settings
-
-- **Playlist Support**: Batch download entire playlists
-  - Single-click playlist downloading
-  - Progress tracking for each video
-  - Customizable naming schemes
-  - Resume capability for interrupted downloads
-
-### ⚡ Advanced Features
-- **High-Speed Downloads**: Embedded [aria2c](https://github.com/aria2/aria2) engine
-  - Multi-connection parallel downloads
-  - Automatic retry on network failure
-  - Resume interrupted downloads
-  - Optimized for mobile networks
-
-- **Subtitle Support**: Comprehensive subtitle handling
-  - Embed subtitles directly into videos
-  - Download subtitles as separate files
-  - Auto-generated and manual subtitles
-  - Multiple language support
-
-- **Custom Commands**: Advanced yt-dlp command execution
-  - Create and save command templates
-  - Full yt-dlp CLI functionality
-  - Template management system
-  - Direct command-line access for power users
-
-- **Download Manager**: Comprehensive download history
-  - Track all downloads with timestamps
-  - Re-download or share files easily
-  - Search and filter capabilities
-  - Batch operations support
-
-### 🚀 Exclusive Cortex DL Features
-- **Auto-Update System**: Seamless in-app updates
-  - Automatic version checking
-  - One-click APK updates
-  - Changelog display before updating
-  - Enabled by default for convenience
-
-- **Enhanced Community**: Connected ecosystem
-  - [YouTube Channel](https://youtube.com/@maheshtechnicals) for tutorials
-  - [Telegram Community](https://t.me/maheshtechnicals) for support
-  - Active development and quick bug fixes
-  - Regular feature updates
-
-### 💻 Technical Excellence
-- **Pure Kotlin Architecture**: Modern Android development
-  - Single Activity architecture (no fragments)
-  - 100% Jetpack Compose UI
-  - Clean MVVM architecture
-  - Kotlin Coroutines for async operations
-
-- **Latest Technology Stack**
-  - Android SDK 37 (Android 17)
-  - Kotlin 2.3.21 with K2 compiler
-  - Jetpack Compose BOM 2026.05.01
-  - Room Database 2.8.4
-  - Material 3 Components
-
-- **Performance Optimized**
-  - Hardware-accelerated animations
-  - Efficient memory management
-  - Background task handling
-  - Battery optimization friendly
-
-
-
-## ⬇️ Download & Installation
-
-
-### 🚀 What's New in v2.9?
-
-<details open>
-<summary><b>📱 Click to see latest updates - Cookies Overhaul, Download Docs, Anti-Bot Detection, MP4 Filter (July 9, 2026)</b></summary>
-
-## ✨ Cortex DL v2.9.0 - Cookies Overhaul, Download Documentation, Anti-Bot Detection, MP4 Filter
+| Tool | Version | Role |
+|------|---------|------|
+| **Kotlin** | `2.3.21` | Primary language — 100% Kotlin codebase |
+| **K2 Compiler** | bundled with Kotlin 2.x | Next-gen Kotlin compiler for faster builds |
+| **KSP** (Kotlin Symbol Processing) | latest | Annotation processing (Room, etc.) |
+| **Java Toolchain** | `JDK 21` | Build-time JVM compatibility |
 
 ---
 
-### 🍪 Manual Cookie Paste Dialog
+### 🏗️ Build System
 
-* **Full Cookie Paste Interface** — New dialog to paste cookies manually in Netscape (.txt), JSON (Cookie-Editor), or Cookie Header (name=value) format
-* **Import** — Paste from clipboard or import from a .txt/.json file on your device
-* **Smart Validation** — Confirm button stays disabled until valid URL and non-empty cookie text are entered
-* **Priority** — Manually pasted cookies take priority over browser-generated cookies
-
-### ⚠️ Facebook/Instagram Account Ban Warning
-
-* **Safety Notice** — Red warning callout inside the paste dialog warns that using personal account cookies may get the account banned
-* **Recommendation** — Advises using a throwaway or secondary account for downloading
-
-### 🛡️ Anti-Bot Detection for Meta Login Pages
-
-* **Two-Layer Bypass** — Combines User-Agent client hint spoofing (Sec-CH-UA header) with JavaScript runtime shims to bypass Meta's bot detection
-* **Layer 1** — Rewrites "Android WebView" brand to "Google Chrome" in Sec-CH-UA headers via `UserAgentMetadata` API
-* **Layer 2** — Injects anti-detection script shimming `window.chrome`, disabling `navigator.webdriver`, patching `userAgentData.brands`
-
-### 🔄 Multi-Window Popup Support
-
-* **Login Popups** — `window.open()` and `target="_blank"` popups render inside the app as a closeable overlay
-* **Back Button** — Closes popup first, then navigates back, then dismisses page
-
-### 🔐 Cookie Management Rewrite
-
-* **Storage Rewrite** — Cookie reading switched from direct SQLite to `CookieManager.getCookie()` API
-* **HttpOnly & Expiry** — Cookie data class tracks `isHttpOnly` and expiry; expired cookies automatically skipped
-* **Auto-Refresh** — Cookies refresh automatically when screen resumes via lifecycle observer
-* **Deduplication** — Cross-profile cookie deduplication by `domain|name`
-
-### 📄 Download Documentation Feature
-
-* **Save Video Metadata** — New "Download Docs" option saves title, uploader, date, duration, URL, tags, and description as a .txt file
-* **Automatic** — File saved to `CortexDL/docs/` after download completes with success toast
-* **Smart Toggle** — Enable without selecting a format to save docs only (no video download)
-
-### 🔧 Download Resilience & Retry
-
-* **Enhanced Retry Settings** — `--retries=10`, `--fragment-retries=10`, `--extractor-retries=3`, `--file-access-retries=3`
-* **Exponential Backoff** — HTTP backoff `exp=1:120`, fragment backoff `exp=1:60` to prevent rate-limit issues
-* **Extended Timeouts** — Socket timeout 5s→15s, info-probe retries 1→3
-* **Aria2c Improvements** — Protocol scoping, `--file-allocation=none`, `--max-tries=5`, `--retry-wait=2`
-* **Concurrent Fragments** — Now works alongside aria2c
-
-### 🎬 Format Selection
-
-* **MP4-Only Filter** — Toggle to show only MP4 (video) / M4A (audio) formats; enabled by default
-* **Coil 3 OkHttp** — Desktop Chrome User-Agent for reliable thumbnail loading
-* **Implausible Size Filter** — Auto-removes formats with unrealistically low bitrates for their resolution
-
-### 🎨 UI Polish
-
-* **Download Dialog V2 Redesign** — `verticalScroll` layout, pill-shaped FilterChips (50dp), FlowRow additional settings, animated ExpandableTitle, redesigned SingleChoiceItem with check icons, segmented button download type selector, weighted action buttons
-* **Battery Optimization** — OEM-specific detection for 8 manufacturers, manufacturer-specific intent builders, dialog dismissal persisted permanently, Xiaomi HyperOS/MIUI targets added
+| Tool | Version | Role |
+|------|---------|------|
+| **Gradle** | `9.5.1` | Build automation system |
+| **Android Gradle Plugin (AGP)** | `9.2.1` | Android-specific Gradle integration |
+| **Gradle KTS** | — | Kotlin DSL for all build scripts |
+| **buildSrc** | — | Centralized version catalog & build logic |
+| **Foojay Toolchain Resolver** | `1.0.0` | Automatic JDK provisioning |
 
 ---
 
-### ✨ Key Features (v2.9)
-
-* 🍪 **Manual Cookie Paste** - Paste cookies in 3 formats, import from clipboard/file
-* ⚠️ **Account Ban Warning** - Safety notice for Facebook/Instagram cookies
-* 🛡️ **Anti-Bot Detection** - Two-layer bypass for Meta login pages
-* 🔄 **Multi-Window Popups** - Login popups handled inside the app
-* 🔐 **Cookie Management Rewrite** - HttpOnly/expiry, auto-refresh, deduplication
-* 📄 **Download Docs** - Save video metadata as text file
-* 🔧 **Download Resilience** - Retry settings, exponential backoff, extended timeouts
-* 🎬 **MP4-Only Filter** - Filter formats by MP4 compatibility
-* 🎨 **Download Dialog Redesign** - Modern pill chips, animated sections
-* 🔋 **Battery Optimization** - OEM-specific handling, persistent dismissal
-* 🔄 **Retry failed downloads** - One-click recovery for failed downloads
-* 🌐 Download from 1000+ sites via yt-dlp
-
-### 📜 Full Changelog
-
-See [CHANGELOG.md](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md) for complete version history.
-
-</details>
-
-<details>
-<summary><b>📱 Previous Release - v2.8 (June 11, 2026)</b></summary>
-
-#### ✨ Cortex DL v2.8.0 - Settings & About Redesign, Dependency Overhaul, Website Redesign
-
-#### 🎨 Settings & About Page Redesign
-- ✅ **Full-Width Settings LazyColumn** - PreferenceItem + chevron icons throughout
-- ✅ **Card-Based About Page** - 2-column CommunityCard grid
-- ✅ **Website link** to cortexdl.in, Auto-Update standalone Card
-
-#### 🔌 Accompanist → Platform API Migration
-- ✅ **Permissions** replaced with ActivityResultContracts
-- ✅ **WebView** replaced with platform AndroidView
-- ✅ **Entire accompanist** dependency bundle removed
-
-#### 📦 Bulk Dependency Update
-- ✅ **Gradle 9.5.1 & AGP 9.2.1** - Upgraded from 8.13
-- ✅ **Kotlin 2.3.21** with K2 Compiler, Compose BOM 2026.05
-- ✅ **Coil 3.4.0** - Migrated from Coil 2 to Coil 3
-- ✅ **Android SDK 37** - compileSdk/targetSdk upgraded
-
-#### 🐛 Bug Fixes & Stability
-- ✅ LockScreen biometric prompt fixed, crash fixes
-- ✅ Memory leak fixes in DownloaderV2 and SponsorUtil
-
-#### 🌍 Website Redesign & SEO Overhaul
-- ✅ New support/contact pages, glassmorphism design
-
-[View Full Changelog →](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-
-</details>
-
-<details>
-<summary><b>📱 Previous Release - v2.7 (May 22, 2026)</b></summary>
-
-#### ✨ Cortex DL v2.7.0 - GitHub Sponsors Integration, Enhanced File Management & UI Improvements
-
-#### 🎁 Monetization & Support
-- ✅ **GitHub Sponsors Integration** - New donation option in Support Developer page
-- ✅ **Support development** directly via github.com/sponsors/MaheshTechnicals
-
-#### 📦 Database & File Management
-- ✅ **Database Schema Upgrade (v7 → v8)** - Added videoId field for tracking
-- ✅ **Enhanced Temp File Deletion** - Better cleanup using videoId
-
-#### 🗑️ User Experience Improvements
-- ✅ **Task Deletion Confirmation Dialog** - Prevents accidental deletion
-- ✅ **Improved Download State Management** - Better network handling
-
-[View Full Changelog →](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-
-</details>
-
-<details>
-<summary><b>📱 Previous Release - v2.6 (April 27, 2026)</b></summary>
-
-#### ✨ Cortex DL v2.6.0 - Security Hardening, 20 Stability Fixes & Material3 Stable
-
-#### 🔒 Security Hardening
-- ✅ **PBKDF2 PIN Hashing** - Industry-standard 200K-iteration secure PIN with salt
-- ✅ **30-Second Brute-Force Lockout** - Countdown after 5 failed PIN attempts
-- ✅ **Removed MANAGE_EXTERNAL_STORAGE** - No overbroad permission required
-- ✅ **ADB Backup Protection** - Sensitive MMKV data excluded from backups
-- ✅ **MITM Prevention** - SSL check re-enabled when proxy is active
-
-#### 🐛 20 Stability Fixes
-- ✅ **Context Leak Fixed** - Prevents memory leaks on activity recreation
-- ✅ **Replaced runBlocking** - No more ANRs from blocking calls
-- ✅ **OkHttp Timeouts** - Explicit connect/read/write timeouts
-- ✅ **Resource Leaks Fixed** - Proper SQLite cleanup
-- ✅ **ConcurrentHashMap** - Race conditions fixed
-- ✅ **AV1 Support** - av01 codec now supported
-
-#### 🎨 Material3 1.3.1 Stable
-- ✅ **Stable Compose BOM** - Migrated from alpha to stable
-- ✅ **OkHttp 4.12.0** - Stable HTTP client
-
-#### 🏠 Home Page Improvements
-- ✅ **Instant Sync** - Recent Downloads updated instantly
-- ✅ **Real-Time File Detection** - Missing files gray out immediately
-
-[View Full Changelog →](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-
-</details>
-
-<details>
-<summary><b>📱 Previous Release - v2.4 (March 10, 2026)</b></summary>
-
-#### ✨ Cortex DL v2.4.0 - Premium Animations, Icon Theming & Share Intent
-
-#### ✨ Animated Branding & Visual Polish
-- ✅ **Animated Glowing "+" Logo** - Flowing gradient animation (primary → tertiary → secondary)
-- ✅ **Gradient Circular Progress Indicator** - Premium sweep-gradient spinner in download dialog
-
-#### 🎨 UI & Theme Enhancements
-- ✅ **Typewriter URL Placeholder Animation** - Character-by-character animated input hint
-- ✅ **Redesigned Navigation Drawer Header** - Center-aligned header with logo and version badge
-- ✅ **Dark Theme On by Default** - New installations default to dark theme
-
-#### 🎯 Consistent Icon Theming
-- ✅ **Material Theme Color Refactor** - 30+ screens using `MaterialTheme.colorScheme`
-
-#### 🍞 Themed Toast System
-- ✅ **Custom Themed Toast Manager** - Material 3 branded toast notifications
-
-#### 🔗 Share Intent & Navigation
-- ✅ **Share Intent URL Handling** - URLs from other apps auto-fill in download field
-- ✅ **Navigation Route Updates** - Sponsor page redirects to Support Developer page
-
-[View Full Changelog →](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-</details>
-
-<details>
-<summary><b>📱 Previous Release - v2.3 (March 3, 2026)</b></summary>
-
-#### ⚙️ Cortex DL v2.3.0 - Smart Downloads, Speed Controls & Better Details
-
-#### ⚙️ Cortex DL Extras Enhancements
-- ✅ **Aria2c Connection Control** - Connection count selector (2/4/8/16/32+)
-- ✅ **Sponsor Dialog Controls** - Off/Weekly/Monthly schedule
-
-#### 📊 Download Details Improvements
-- ✅ **Average Speed Display** - Real-time speed metrics in details dialog
-- ✅ **Download Time Display** - Total elapsed time tracking
-
-#### 🎨 UI & Format Card Improvements
-- ✅ **Clean Resolution Labels** - Human-readable format titles
-- ✅ **Redesigned Video Detail Drawer** - Modern card-based layout
-
-#### 🚀 Smart Stream-Merge Routing
-- ✅ **Platform-Aware Format Selection** - Best format per platform
-
-[View Full Changelog →](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-</details>
-
-<details>
-<summary><b>📱 Previous Release - v2.2 (February 27, 2026)</b></summary>
-
-#### 🏎️ Cortex DL v2.2.0 - Downloader Performance & Core Fixes
-
-#### 🚀 Performance Optimization
-- ✅ **Aria2c Speed Boost** - Fixed argument quoting, doubled connections (8 → 16 streams)
-- ✅ **Cleaned up** redundant aria2c summary interval arguments
-
-#### 🛠️ Core Downloader Fixes
-- ✅ **Accurate Resolution Selection** - Fixed bug ignoring chosen video resolution
-- ✅ **Format validation corrected** - No more stale state captures
-- ✅ **Audio codec fix** - Proper merge path for selected resolution
-
-#### 🎨 UI & Notification Improvements
-- ✅ **Cleaner progress text** - Removed `[download]` prefix from progress cards
-- ✅ **Progress bar fix** - 0.1–0.9% shows real bar instead of spinner
-
-[View Full Changelog →](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-</details>
-
-<details>
-<summary><b>📱 Previous Major Release - v2.0 (February 5, 2026)</b></summary>
-
-#### 🚀 Major Release - Revolutionary Download Management
-
-**⚠️ IMPORTANT:** Package name changed to `com.maheshtechnicals.cortexdl`. Uninstall old app before installing v2.0.
-
-#### ⏯️ Download Control & Management
-- ✅ **Pause and Resume** - Control downloads from menu and cards
-- 🔢 **Concurrent Downloads (1-5)** - Manage multiple downloads with queue
-- 💾 **Progress Preservation** - Resume from exact position
-- 📊 **Enhanced Status** - Clear indicators: "Fetching", "Downloading video/audio", "Merging"
-
-#### 🌐 Advanced Proxy Settings (BETA)
-- 🔄 **Auto-fetch and auto-test** - Find working proxies automatically
-- 🌍 **Free proxy support** - Access proxies by country
-- ⚙️ **Custom configuration** - HTTP/HTTPS/SOCKS proxies
-
-#### 📊 Download Details & Information
-- 🔍 **Comprehensive dialog** - View file info: name, size, format, path, date
-- 🖱️ **Interactive elements** - Click to copy URLs and view full paths
-- 🎨 **Beautiful UI** - Gradient headers and structured layout
-
-#### 💰 Developer Support Features
-- 💳 **UPI Payment Integration** - Support developers through donations
-- 🎨 **Redesigned Sponsors Page** - Enhanced engagement and layout
-- 👨‍💻 **Support Developer Page** - Multiple contribution options
-
-#### 🔔 Smart Permissions
-- 📱 **Notification handling** - Android 13+ permission management
-- 🔋 **Battery optimization** - Smart prompts for settings
-- 📢 **Telegram notifications** - Release announcements to groups
-
-#### ⚙️ Configuration Updates
-- 🛡️ **yt-dlp stable build** - Changed from nightly for better reliability
-- ⚡ **Better performance** - Improved download stability
-
-#### Previous Updates (v1.2.7, v1.2.6, v1.2.5)
-- 🎨 **Redesigned Home Page** - Modern, clutter-free interface
-- ✨ **Professional Onboarding Screens**
-- 🎭 **Elegant Splash Screen** with animations
-- 🔒 **App Lock** with PIN & Biometric
-- 🎥 **Enhanced Video Merging** - Best quality automatically
-
-[View Full Changelog →](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-</details>
-
-### 📦 Recommended Installation
-
-For most Android devices, install the **arm64-v8a** version for optimal performance.
-
-### 🚀 Latest Releases
-
-- **Latest Stable**: [Download from GitHub Releases](https://github.com/MaheshTechnicals/Cortex DL/releases/latest)
-  - ✅ **Current Version**: v2.9.0 (July 2026)
-  - 🍪 **Manual Cookie Paste** - Paste cookies in 3 formats, import from clipboard/file
-  - ⚠️ **Account Ban Warning** - Safety notice for Facebook/Instagram personal cookies
-  - 🛡️ **Anti-Bot Detection** - Two-layer bypass for Meta login pages
-  - 🔄 **Multi-Window Popups** - Login popups handled inside the app
-  - 🔐 **Cookie Management Rewrite** - HttpOnly/expiry, auto-refresh, deduplication
-  - 📄 **Download Docs** - Save video metadata as text file alongside downloads
-  - 🔧 **Download Resilience** - Retry settings, exponential backoff, extended timeouts
-  - 🎬 **MP4-Only Filter** - Filter formats by MP4 compatibility
-  - 🎨 **Download Dialog Redesign** - Modern pill chips, animated sections
-  - 🔋 **Battery Optimization** - OEM-specific detection, persistent dismissal
-  - 🌐 **1000+ Sites** - Download from YouTube, Instagram, TikTok & more
-  - 🔄 **Retry failed downloads** - One-click recovery for canceled/failed downloads
-  - 🚀 **Auto-Update System** enabled for seamless updates
-
-- **Preview Builds**: [Download Pre-release Versions](https://github.com/MaheshTechnicals/Cortex DL/releases) 
-  - 🧪 Test cutting-edge features
-  - 🐛 Help us identify and fix bugs
-  - 📢 Early access to new functionality
-
-### 📱 Device Compatibility
-
-| Requirement | Specification |
-|------------|---------------|
-| **Minimum Android** | Android 7.0 (API 24) |
-| **Target Android** | Android 17 (API 37) |
-| **Current Version** | 2.9.0 |
-| **Release Date** | July 9, 2026 |
-
-### 🏗️ Architecture Support
-
-- ✅ **arm64-v8a** (Recommended for most modern devices)
-- ✅ **armeabi-v7a** (Older 32-bit ARM devices)
-- ✅ **x86_64** (Intel/AMD 64-bit devices)
-- ✅ **x86** (Older Intel/AMD 32-bit devices)
-
-### 📋 Installation Instructions
-
-1. **Download** the appropriate APK for your device architecture from [Releases](https://github.com/MaheshTechnicals/Cortex DL/releases/latest)
-2. **Enable** "Install from unknown sources" in Settings → Security
-3. **Open** the downloaded APK file
-4. **Follow** the installation prompts
-5. **Grant** necessary permissions when launching the app
-6. **Enjoy** seamless downloads!
-
-> [!TIP]
-> **Auto-Update Feature**: Once installed, Cortex DL will automatically check for updates. You'll be notified when new versions are available and can update with one click!
-
-> [!WARNING]
-> **Security Notice**: Always download Cortex DL exclusively from our [official GitHub releases page](https://github.com/MaheshTechnicals/Cortex DL/releases). Never download from third-party sources to ensure you're getting the authentic, safe version.
+### 📱 Android SDK
+
+| Setting | Value |
+|---------|-------|
+| **Compile SDK** | API 37 (Android 17) |
+| **Target SDK** | API 37 (Android 17) |
+| **Min SDK** | API 24 (Android 7.0 Nougat) |
+| **Application ID** | `com.cortex.dl` |
+| **Namespace** | `com.cortex.dl` |
 
 ---
 
-## ❓ Frequently Asked Questions
+### 🎨 UI Framework
 
-<details>
-<summary><b>📱 How do I enable Gradient Dark theme?</b></summary>
-
-1. Open **Settings**
-2. Go to **Look & Feel**
-3. Enable **Dark Theme** (if not already on)
-4. Toggle **Gradient Dark** switch
-5. Enjoy the premium glassmorphism UI!
-
-The theme features deep backgrounds with vibrant blue-purple gradients and smooth animations.
-</details>
-
-<details>
-<summary><b>🔄 How does auto-update work?</b></summary>
-
-Cortex DL automatically checks for updates from our GitHub releases:
-- Enabled by default for all installations
-- Checks when you open the app (not intrusive)
-- Shows changelog before updating
-- One-click download and install
-- Can be disabled in Settings → About → Auto update
-
-No need to manually check for updates anymore!
-</details>
-
-<details>
-<summary><b>📥 Which architecture should I download?</b></summary>
-
-| Architecture | Recommended For |
-|--------------|-----------------|
-| **arm64-v8a** | Most modern Android phones (2017+) - **Recommended** |
-| **armeabi-v7a** | Older phones (2011-2017) |
-| **x86_64** | Intel/AMD based devices, emulators |
-| **x86** | Older Intel/AMD devices |
-| **universal** | Works on all devices (larger file size) |
-
-This project is tested with BrowserStack
-
-**Don't know?** Download the **universal** APK - it works on all devices!
-</details>
-
-<details>
-<summary><b>🌍 Can I use this to download from any website?</b></summary>
-
-Cortex DL supports **1000+ platforms** via yt-dlp, including:
-- ✅ YouTube, YouTube Music
-- ✅ Instagram, TikTok, Twitter/X
-- ✅ Facebook, Reddit, Vimeo
-- ✅ Twitch, SoundCloud, Bandcamp
-- ✅ Dailymotion, Bilibili, and many more!
-
-[View complete list →](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
-</details>
-
-<details>
-<summary><b>🎵 Can I extract only audio from videos?</b></summary>
-
-Yes! Cortex DL has excellent audio extraction:
-- Toggle "Save as audio" option
-- Choose format (MP3, M4A, OPUS, etc.)
-- Automatic metadata embedding
-- Album art/thumbnail included
-- Customizable quality settings
-
-Perfect for music downloads and podcasts!
-</details>
-
-<details>
-<summary><b>🔧 What's the difference between General and Custom Command modes?</b></summary>
-
-**General Mode** (Easy):
-- User-friendly interface
-- Pre-configured options
-- Automatic file organization
-- Best for most users
-
-**Custom Command Mode** (Advanced):
-- Full yt-dlp CLI access
-- Create and save templates
-- Advanced configurations
-- Terminal-like control
-
-Choose based on your comfort level!
-</details>
-
-<details>
-<summary><b>🔐 Is Cortex DL safe? Does it collect my data?</b></summary>
-
-**Absolutely safe!**
-- ✅ 100% open-source (view all code)
-- ✅ No data collection or analytics
-- ✅ No ads or trackers
-- ✅ No internet permissions except for downloads
-- ✅ All processing done locally on your device
-- ✅ Licensed under GPL-3.0
-
-You can verify everything in the [source code](https://github.com/MaheshTechnicals/Cortex DL).
-</details>
-
-<details>
-<summary><b>📱 What's the difference between Seal and Cortex DL?</b></summary>
-
-**Cortex DL** is an enhanced fork with:
-- 🎨 **Exclusive Gradient Dark Theme** with glassmorphism
-- 🚀 **Auto-update system** enabled by default
-- 📺 **Enhanced community** (YouTube, Telegram)
-- 🔧 **Additional UI improvements** and optimizations
-- 🎯 **Active maintenance** by Mahesh Technicals
-- 🏆 **Latest tech stack** (Kotlin 2.0, Compose 2025, SDK 36)
-
-Both are free and open-source!
-</details>
-
-<details>
-<summary><b>❌ I'm getting download errors. What should I do?</b></summary>
-
-Try these solutions:
-1. **Update yt-dlp**: Settings → About → Update yt-dlp
-2. **Check internet**: Ensure stable connection
-3. **Clear cache**: Settings → Storage → Clear cache
-4. **Try custom command**: Some sites need specific parameters
-5. **Check site support**: Visit [supported sites list](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
-6. **Report issue**: [GitHub Issues](https://github.com/MaheshTechnicals/Cortex DL/issues) with details
-
-Most issues are resolved by updating yt-dlp!
-</details>
+| Library | Version | Role |
+|---------|---------|------|
+| **Jetpack Compose BOM** | `2026.05.01` | Unified Compose versioning |
+| **Compose UI** | BOM-managed | Core UI rendering |
+| **Compose Foundation** | BOM-managed | Layout primitives |
+| **Compose Material 3** | `1.3.1 stable` | Material Design 3 component library |
+| **Compose Animation** | BOM-managed | Smooth transitions & animations |
+| **Compose Navigation** | BOM-managed | In-app navigation |
+| **Compose UI Tooling** | BOM-managed | Preview & debugging |
+| **Lifecycle Runtime Compose** | latest | Lifecycle-aware Compose integration |
+| **Core SplashScreen** | `1.0.1` | Android 12+ splash screen API |
 
 ---
 
-## 💬 Community & Support
+### 🗄️ Data Persistence
 
-### 🌐 Join Our Community
+| Library | Version | Role |
+|---------|---------|------|
+| **Room Runtime** | `2.8.4` | SQLite ORM for download history |
+| **Room KTX** | `2.8.4` | Coroutines extensions for Room |
+| **Room Compiler (KSP)** | `2.8.4` | Code generation for DAO/Entity |
+| **MMKV** | latest | High-performance key-value storage (preferences) |
 
-Stay connected with the Cortex DL community and get support:
+---
 
-- **📺 YouTube Channel**: [Mahesh Technicals](https://youtube.com/@maheshtechnicals)
-  - Video tutorials and feature demonstrations
-  - Tips and tricks for advanced usage
-  - Update announcements and previews
+### 🌐 Networking
 
-- **💬 Telegram Channel**: [Join @maheshtechnicals](https://t.me/maheshtechnicals)
-  - Latest updates and announcements
-  - Quick community support
-  - Direct developer interaction
-  - Beta testing opportunities
+| Library | Version | Role |
+|---------|---------|------|
+| **OkHttp** | `4.12.0` | HTTP client for update checks & networking |
+| **Coil 3** | `3.4.0` | Image loading (thumbnail previews) |
+| **Coil OkHttp** | `3.4.0` | OkHttp network backend for Coil |
 
-### 🐛 Bug Reports & Feature Requests
+---
 
-We value your feedback! Help us improve Cortex DL:
+### 📦 Dependency Injection
 
-1. **Check First**: Browse [existing issues](https://github.com/MaheshTechnicals/Cortex DL/issues) to avoid duplicates
-2. **Read Guidelines**: Review our [Contributing Guidelines](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CONTRIBUTING.md)
-3. **Report Issues**: Open a [new issue](https://github.com/MaheshTechnicals/Cortex DL/issues/new) with:
-   - Clear description of the problem/feature
-   - Steps to reproduce (for bugs)
-   - Your device model and Android version
-   - App version and build variant
-   - Screenshots or screen recordings (if applicable)
+| Library | Version | Role |
+|---------|---------|------|
+| **Koin Android** | `4.2.1` | Dependency injection framework |
+| **Koin Compose** | `4.2.1` | Compose integration for Koin |
 
-### 📖 Documentation & Resources
+---
 
-- **📋 Changelog**: [View all changes and updates](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CHANGELOG.md)
-- **🌍 Supported Sites**: [Full list of 1000+ supported platforms](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
-- **🎨 Gradient Dark Theme**: [Complete documentation](https://github.com/MaheshTechnicals/Cortex DL/blob/main/GRADIENT_DARK_README.md)
-- **📖 Contributing Guide**: [How to contribute](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CONTRIBUTING.md)
+### ⚙️ Async & Concurrency
 
-## 💖 Support Cortex DL
+| Library | Version | Role |
+|---------|---------|------|
+| **Kotlin Coroutines** | `1.11.0` | Asynchronous programming model |
+| **Kotlinx Serialization JSON** | latest | JSON parsing/serialization |
 
-### ❤️ Show Your Support
+---
 
-Cortex DL is **100% free and open-source** software, built with passion by the community. Here's how you can help:
+### 🎬 Downloader Core
 
-| Action | Impact |
-|--------|--------|
-| ⭐ **Star this repo** | Help others discover Cortex DL |
-| 📺 **Subscribe on YouTube** | Get tutorials and update notifications |
-| 💬 **Join Telegram** | Connect with the community |
-| 🐛 **Report bugs** | Help us fix issues faster |
-| 💡 **Suggest features** | Shape the future of Cortex DL |
-| 🌍 **Translate** | Make it accessible worldwide |
-| 📢 **Share** | Tell your friends about Cortex DL |
+| Library | Version | Role |
+|---------|---------|------|
+| **yt-dlp-android** | `2025.12.08` | Core download engine (yt-dlp wrapper) |
+| **aria2c** | bundled | Multi-connection parallel downloader |
+| **mutagen** | bundled | Audio metadata embedding |
+| **AndroidX WebKit** | `1.16.0` | WebView anti-bot bypass (Meta login) |
+| **AndroidX DocumentFile** | latest | SAF-based file access |
 
-### 🎉 Special Thanks
+---
 
-A huge thank you to:
-- **[JunkFood02](https://github.com/JunkFood02)** and all [original Seal contributors](https://github.com/JunkFood02/Seal/graphs/contributors)
-- **All sponsors** supporting the original Seal project
-- **Our community members** providing feedback and bug reports
-- **Translators** making Cortex DL accessible worldwide
-- **Everyone** who has starred, shared, or used Cortex DL
+### 🔧 Developer Tooling
 
-Your contributions and support make this project possible! 🙏
+| Tool | Role |
+|------|------|
+| **Android Studio Ladybug** | Official IDE |
+| **ktfmt (Gradle Plugin)** | Kotlin code formatter (kotlinLangStyle) |
+| **ProGuard / R8** | Code shrinking & obfuscation (release builds) |
+| **Lint** | Static analysis (MissingTranslation/ExtraTranslation disabled) |
+| **JUnit 4** | Unit testing framework |
+| **AndroidX Test Ext** | Android instrumented testing |
+| **Espresso Core** | UI testing framework |
 
-## 🤝 Contributing to Cortex DL
+---
 
-We welcome all contributions! Whether you're a developer, designer, translator, or user, there's a way for you to help.
+### 🏛️ Architecture
 
-### 🌍 Translations
+| Pattern | Implementation |
+|---------|----------------|
+| **Architecture** | MVVM + Clean Architecture |
+| **UI Layer** | Jetpack Compose (single-activity, no fragments) |
+| **State Management** | `StateFlow` + `ViewModel` |
+| **Navigation** | Compose Navigation |
+| **Background Work** | Android `Service` + Kotlin Coroutines |
+| **Theme System** | Material 3 dynamic colors + custom Gradient Dark theme |
 
-Help make Cortex DL accessible to users worldwide:
+---
 
-- **Contribute**: Visit [Hosted Weblate](https://hosted.weblate.org/projects/seal/) to add or improve translations
-- **Current Status**: 
+## 📁 Project Structure
 
-[![Translation Status](https://hosted.weblate.org/widgets/seal/-/strings/multi-auto.svg)](https://hosted.weblate.org/engage/seal/)
-
-### 💻 Code Contributions
-
-#### Getting Started
-1. **Fork** the repository
-2. **Clone** your fork: `git clone https://github.com/YOUR_USERNAME/Seal.git`
-3. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-4. **Make** your changes
-5. **Test** thoroughly on multiple devices
-6. **Commit** with clear messages: `git commit -m "Add amazing feature"`
-7. **Push** to your fork: `git push origin feature/amazing-feature`
-8. **Open** a Pull Request with detailed description
-
-#### Development Environment
-```bash
-# Requirements
-- Android Studio Ladybug or later
-- JDK 17 or later
-- Android SDK 24-36
-- Gradle 8.13+
-
-# Build
-./gradlew assembleRelease
-
-# Debug Build
-./gradlew assembleDebug
+```
+Cortex-DL-android/
+│
+├── 📄 build.gradle.kts              ← Root Gradle build script
+├── 📄 settings.gradle.kts           ← Project settings & module includes
+├── 📄 gradle.properties             ← Gradle JVM args & project properties
+├── 📄 gradlew / gradlew.bat         ← Gradle wrapper scripts
+├── 📄 .gitignore                    ← Git ignore rules
+├── 📄 LICENSE                       ← GPL-3.0 license
+│
+├── 📂 buildSrc/                     ← Centralized build logic
+│   └── 📂 src/
+│       └── version constants, dependency versions
+│
+├── 📂 gradle/
+│   └── 📄 libs.versions.toml        ← Version catalog (all dependency versions)
+│
+├── 📂 color/                        ← Standalone color library module
+│
+└── 📂 app/                          ← Main application module
+    │
+    ├── 📄 build.gradle.kts          ← App-level build config (SDK, deps, flavors)
+    ├── 📄 proguard-rules.pro        ← ProGuard rules for release builds
+    │
+    ├── 📂 schemas/                  ← Room database migration schemas (JSON)
+    │
+    └── 📂 src/main/
+        │
+        ├── 📄 AndroidManifest.xml   ← App manifest (permissions, activities)
+        │
+        ├── 📂 res/                  ← Android resources
+        │   ├── drawable/            ← Icons & vector assets
+        │   ├── values/              ← Strings, colors, themes
+        │   └── mipmap/              ← App launcher icons
+        │
+        └── 📂 java/com/cortex/dl/
+            │
+            ├── 📄 App.kt                    ← Application class (Koin init)
+            ├── 📄 MainActivity.kt           ← Single entry-point Activity
+            ├── 📄 DownloadService.kt        ← Background download service
+            ├── 📄 CrashReportActivity.kt    ← Crash handling & reporting
+            ├── 📄 NotificationActionReceiver.kt ← Download notification actions
+            │
+            ├── 📂 database/                 ← Room database layer
+            │   ├── 📄 AppDatabase.kt        ← Room database definition
+            │   ├── 📄 VideoInfoDao.kt       ← DAO for download history
+            │   ├── 📂 backup/
+            │   │   ├── 📄 Backup.kt         ← Backup data model
+            │   │   └── 📄 BackupUtil.kt     ← Import/export logic
+            │   └── 📂 objects/
+            │       ├── 📄 CommandTemplate.kt    ← Custom yt-dlp templates
+            │       ├── 📄 CookieProfile.kt      ← Cookie authentication profiles
+            │       ├── 📄 DownloadedVideoInfo.kt ← Download record entity
+            │       └── 📄 OptionShortcut.kt     ← Download option presets
+            │
+            ├── 📂 download/                 ← Download execution layer
+            │   ├── 📄 DownloaderV2.kt       ← Core download engine wrapper
+            │   ├── 📄 Task.kt               ← Download task model
+            │   └── 📄 TaskFactory.kt        ← Task creation & configuration
+            │
+            ├── 📂 ui/                       ← Jetpack Compose UI layer
+            │   ├── 📄 AppNavigation.kt      ← Navigation graph & routes
+            │   ├── 📄 MainScreen.kt         ← Home screen (URL input)
+            │   ├── 📄 MainViewModel.kt      ← ViewModel for main screen
+            │   ├── 📄 DownloadsHistoryScreen.kt ← Download history list
+            │   ├── 📄 SettingsScreen.kt     ← App settings UI
+            │   ├── 📄 VideoInfoBottomSheet.kt ← Format selection bottom sheet
+            │   └── 📂 theme/                ← Design system
+            │       ├── 📄 Theme.kt          ← Material 3 theme entry point
+            │       ├── 📄 Color.kt          ← Color definitions
+            │       ├── 📄 ColorScheme.kt    ← Light/Dark color schemes
+            │       ├── 📄 GradientDarkTheme.kt ← Exclusive gradient dark theme
+            │       ├── 📄 Shape.kt          ← Shape tokens
+            │       └── 📄 Type.kt           ← Typography tokens
+            │
+            └── 📂 util/                     ← Utility & helper layer
+                ├── 📄 Cookie.kt             ← Cookie parsing (Netscape/JSON/Header)
+                ├── 📄 DatabaseUtil.kt       ← DB helper operations
+                ├── 📄 DateTimeUtil.kt       ← Date/time formatting
+                ├── 📄 DownloadUtil.kt       ← yt-dlp command builder
+                ├── 📄 FileUtil.kt           ← File path & SAF utilities
+                ├── 📄 FormatValidator.kt    ← Format/quality filter logic
+                ├── 📄 NotificationUtil.kt   ← Notification channel & builder
+                ├── 📄 PreferenceUtil.kt     ← MMKV preference wrapper
+                ├── 📄 ProxyManager.kt       ← Proxy configuration manager
+                ├── 📄 ProxyValidator.kt     ← Proxy validation & testing
+                ├── 📄 TextUtil.kt           ← String & text helpers
+                ├── 📄 UpdateUtil.kt         ← Auto-update checker (GitHub API)
+                └── 📄 VideoInfo.kt          ← Video metadata model
 ```
 
-### 📋 Contribution Guidelines
+---
 
-> [!IMPORTANT]
-> Before contributing, please read our [Contributing Guidelines](https://github.com/MaheshTechnicals/Cortex DL/blob/main/CONTRIBUTING.md) for:
-> - Code style standards
-> - Commit message conventions
-> - Pull request requirements
-> - Feature request process
-> - Bug report templates
+## 🚀 Getting Started (Developer Setup)
 
-### 🏗️ Technology Stack
+### Prerequisites
 
-| Component | Technology | Version |
-|-----------|-----------|---------|
-| **Language** | Kotlin | 2.3.21 |
-| **UI Framework** | Jetpack Compose | 2026.05.01 |
-| **Architecture** | MVVM + Clean Architecture | - |
-| **Build System** | Gradle (KTS) | 9.5.1 |
-| **Minimum SDK** | Android 7.0 | API 24 |
-| **Target SDK** | Android 17 | API 37 |
-| **Database** | Room | 2.8.4 |
-| **Async** | Kotlin Coroutines | 1.11.0 |
-| **Networking** | OkHttp | 4.12.0 |
-| **Image Loading** | Coil 3 | 3.4.0 |
-| **DI** | Koin | 4.2.1 |
+| Requirement | Version |
+|-------------|---------|
+| **Android Studio** | Ladybug or later |
+| **JDK** | 21 (auto-provisioned via Foojay) |
+| **Android SDK** | API 24 → 37 |
+| **Gradle** | 9.5.1 (via wrapper) |
 
-## ⭐ Star History
+### Clone & Build
 
-Watch how our community has grown over time!
+```bash
+# Clone the repository
+git clone https://github.com/SAADX25/Cortex-DL-android.git
+cd Cortex-DL-android
 
-[![Star History Chart](https://api.star-history.com/svg?repos=MaheshTechnicals/Cortex DL&type=Timeline)](https://star-history.com/#MaheshTechnicals/Cortex DL&Timeline)
+# Debug build
+./gradlew assembleDebug
+
+# Release build (requires keystore.properties)
+./gradlew assembleRelease
+
+# Run tests
+./gradlew test
+./gradlew connectedAndroidTest
+
+# Clean build
+./gradlew clean
+```
+
+### Output APKs
+
+By default, the build produces **ABI-split APKs** in:
+
+```
+app/build/outputs/apk/generic/release/
+├── CortexDL-<version>-arm64-v8a.apk     ← Recommended (most devices)
+├── CortexDL-<version>-armeabi-v7a.apk   ← Older 32-bit ARM
+├── CortexDL-<version>-x86_64.apk        ← Intel/AMD 64-bit
+├── CortexDL-<version>-x86.apk           ← Older Intel/AMD
+└── CortexDL-<version>-universal.apk     ← All architectures
+```
+
+### Build Variants
+
+| Variant | Application ID | Description |
+|---------|---------------|-------------|
+| `genericDebug` | `com.cortex.dl.debug` | Development build with debug suffix |
+| `genericRelease` | `com.cortex.dl` | Production build with minification |
 
 ---
 
-## 🙏 Acknowledgments & Credits
+## 🏛️ Architecture Overview
 
-Cortex DL stands on the shoulders of giants. We're grateful to these amazing open-source projects and contributors:
+```
+┌─────────────────────────────────────────────────────┐
+│                    UI Layer                         │
+│         Jetpack Compose · Material 3                │
+│   MainScreen · SettingsScreen · HistoryScreen       │
+│         BottomSheets · Navigation                   │
+└───────────────────┬─────────────────────────────────┘
+                    │ StateFlow / collectAsState
+┌───────────────────▼─────────────────────────────────┐
+│                ViewModel Layer                      │
+│            MainViewModel (Koin DI)                  │
+│        Kotlin Coroutines · StateFlow                │
+└───────────────────┬─────────────────────────────────┘
+                    │
+        ┌───────────┴────────────┐
+        │                        │
+┌───────▼──────────┐   ┌────────▼────────────────────┐
+│  Download Layer  │   │      Data Layer              │
+│  DownloaderV2    │   │  Room DB · MMKV · Backup     │
+│  Task / Factory  │   │  VideoInfoDao · Preferences  │
+│  yt-dlp · aria2c │   └──────────────────────────────┘
+└──────────────────┘
+        │
+┌───────▼──────────┐
+│  Android Service │
+│  DownloadService │
+│  Notifications   │
+└──────────────────┘
+```
 
-### 🏆 Core Technologies
+---
 
-| Project | Description | License |
-|---------|-------------|---------|
-| **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** | Powerful video downloader engine | Unlicense |
-| **[youtubedl-android](https://github.com/yausername/youtubedl-android)** | Android wrapper for yt-dlp | GPL-3.0 |
-| **[aria2](https://github.com/aria2/aria2)** | High-speed download utility | GPL-2.0 |
-| **[mutagen](https://github.com/quodlibet/mutagen)** | Audio metadata handler | GPL-2.0 |
+## 🔑 Key Features
 
-### 🎨 Design & UI Inspiration
+- 🎨 **Exclusive Gradient Dark Theme** — Glassmorphism with deep OLED backgrounds & vibrant gradients
+- ⚡ **Auto-Update System** — One-click in-app APK updates via GitHub Releases API
+- 🌐 **1000+ Sites** — Powered by [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+- 🚀 **Parallel Downloads** — Embedded [aria2c](https://github.com/aria2/aria2) with multi-connection support
+- 🍪 **Cookie Management** — Netscape / JSON / Header format with anti-bot bypass for Meta
+- 🔐 **App Lock** — PIN & Biometric authentication with PBKDF2 hashing
+- 📄 **Download Docs** — Save video metadata as `.txt` alongside downloads
+- 🎬 **Format Selection** — MP4-only filter, implausible size detection, quality validation
+- 📋 **Playlist Support** — Batch download with progress tracking per video
 
-| Project | Inspiration | Author |
-|---------|-------------|--------|
-| **[Seal](https://github.com/JunkFood02/Seal)** | Original foundation | [JunkFood02](https://github.com/JunkFood02) |
-| **[Read You](https://github.com/Ashinch/ReadYou)** | UI patterns & components | [Ashinch](https://github.com/Ashinch) |
-| **[Music You](https://github.com/Kyant0/MusicYou)** | Design aesthetic | [Kyant0](https://github.com/Kyant0) |
-| **[dvd](https://github.com/yausername/dvd)** | Additional utilities | [yausername](https://github.com/yausername) |
+---
 
-### 🌈 Material Design System
+## 🤝 Contributing
 
-| Library | Purpose |
-|---------|---------|
-| **[Material Color Utilities](https://github.com/material-foundation/material-color-utilities)** | Dynamic color theming |
-| **[Monet](https://github.com/Kyant0/Monet)** | Color scheme generation |
-| **[Material 3 Components](https://m3.material.io/)** | Modern UI components |
+1. **Fork** this repository
+2. **Create** a feature branch: `git checkout -b feature/your-feature`
+3. **Commit** with clear messages: `git commit -m "feat: add amazing feature"`
+4. **Push** to your fork: `git push origin feature/your-feature`
+5. **Open** a Pull Request with a detailed description
 
-### 🎯 Cortex DL Exclusive Features
+> Please follow the existing code style — `ktfmt` with `kotlinLangStyle()` is enforced automatically.
 
-**Gradient Dark Theme** - Premium UI mode with glassmorphism effects
-- Designed and implemented by [Mahesh Technicals](https://github.com/MaheshTechnicals)
-- 21 new resource files and components
-- 2,200+ lines of documentation
-- [View Implementation Guide](https://github.com/MaheshTechnicals/Cortex DL/blob/main/GRADIENT_DARK_IMPLEMENTATION_GUIDE.md)
+---
 
-### 🌟 Original Creator
+## 📜 License
 
-**[JunkFood02](https://github.com/JunkFood02)** - Creator of the original Seal project
-- Thank you for building an amazing foundation
-- Cortex DL is an enhanced fork with additional features
-- All [original contributors](https://github.com/JunkFood02/Seal/graphs/contributors) deserve recognition
+This project is licensed under the **GNU General Public License v3.0**.  
+See [LICENSE](LICENSE) for the full text.
 
-### 🌍 Community Contributors
+---
 
-- **Translators** on [Weblate](https://hosted.weblate.org/projects/seal/) - Making Cortex DL accessible worldwide
-- **Beta Testers** - Helping us catch bugs early
-- **Issue Reporters** - Providing valuable feedback
-- **Feature Suggesters** - Shaping the roadmap
-- **All Contributors** to [Cortex DL](https://github.com/MaheshTechnicals/Cortex DL/graphs/contributors)
+## 🙏 Credits
 
-### 💝 Special Recognition
+| Project | Author | Role |
+|---------|--------|------|
+| [Seal](https://github.com/JunkFood02/Seal) | JunkFood02 | Base application |
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | yt-dlp team | Download engine |
+| [aria2](https://github.com/aria2/aria2) | aria2 team | Parallel downloader |
+| [mutagen](https://github.com/quodlibet/mutagen) | quodlibet | Audio metadata |
+| [Koin](https://github.com/InsertKoinIO/koin) | InsertKoinIO | Dependency injection |
+| [Coil](https://github.com/coil-kt/coil) | coil-kt | Image loading |
+| [MMKV](https://github.com/Tencent/MMKV) | Tencent | Key-value storage |
 
-This project wouldn't be possible without the collective efforts of the open-source community. Every contribution, no matter how small, makes a difference. Thank you all! 🙏
+---
 
-## 📃 License
+<div align="center">
 
-[![GitHub](https://img.shields.io/github/license/MaheshTechnicals/Cortex DL?style=for-the-badge)](https://github.com/MaheshTechnicals/Cortex DL/blob/main/LICENSE)
+Made with ❤️ · GPL-3.0 Licensed · Built with Kotlin & Jetpack Compose
 
->[!Warning]
->
->Except for the source code licensed under the GPLv3 license,
->all other parties are prohibited from using Seal's name as a downloader app,
->and the same is true for Seal's derivatives.
->Derivatives include but are not limited to forks and unofficial builds.
-
-<div align="right">
-<table><td>
-<a href="#start-of-content">👆 Scroll to top</a>
-</td></table>
 </div>
