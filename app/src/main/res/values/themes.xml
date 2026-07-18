@@ -1,0 +1,21 @@
+<resources>
+
+    <style name="Theme.CortexDL" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.CortexDL.Dialog" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="Theme.CortexDL.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background (CortexDarkBackground #0F172A) -->
+        <item name="windowSplashScreenBackground">#0F172A</item>
+        <item name="postSplashScreenTheme">@style/Theme.CortexDL</item>
+    </style>
+
+</resources>

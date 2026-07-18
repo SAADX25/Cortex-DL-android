@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="extract_audio">Saglabāt kā audio</string>
+    <string name="create_thumbnail">saglabāt sīktēlu</string>
+    <string name="settings">Iestatījumi</string>
+    <string name="video_directory">Video mape</string>
+    <string name="video_audio_merge_hint">Video un audio ir atlasīti — lejupielādējot tiks automātiski apvienoti.</string>
+    <string name="download_and_merge">Lejupielādēt un apvienot</string>
+</resources>
