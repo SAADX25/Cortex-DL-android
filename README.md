@@ -385,8 +385,4 @@ See [LICENSE](LICENSE) for the full text.
 
 ---
 
-<div align="center">
-
-Made with ❤️ · GPL-3.0 Licensed · Built with Kotlin & Jetpack Compose
-
 </div>
