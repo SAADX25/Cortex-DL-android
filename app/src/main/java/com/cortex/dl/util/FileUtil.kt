@@ -82,11 +82,31 @@ object FileUtil {
         }
     }
 
+    fun getMimeType(path: String): String {
+        val extension = File(path).extension.lowercase()
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+            ?: when (extension) {
+                "opus" -> "audio/opus"
+                "m4a" -> "audio/mp4"
+                "mp3" -> "audio/mpeg"
+                "ogg" -> "audio/ogg"
+                "wav" -> "audio/wav"
+                "flac" -> "audio/flac"
+                "aac" -> "audio/aac"
+                "webm" -> "audio/webm"
+                "mp4" -> "video/mp4"
+                "mkv" -> "video/x-matroska"
+                else -> "*/*"
+            }
+    }
+
     fun createIntentForOpeningFile(path: String?): Intent? =
-        createIntentForFile(path)?.let {
-            it.apply {
-                action = (Intent.ACTION_VIEW)
+        createIntentForFile(path)?.let { intent ->
+            intent.apply {
+                action = Intent.ACTION_VIEW
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                val mimeType = path?.let { getMimeType(it) } ?: "*/*"
+                setDataAndType(data, mimeType)
             }
         }
 

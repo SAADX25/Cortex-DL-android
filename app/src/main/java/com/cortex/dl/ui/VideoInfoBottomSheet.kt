@@ -193,7 +193,7 @@ private fun buildPreferences(mediaType: MediaType, resolution: Int): DownloadUti
     return base.copy(
         extractAudio = mediaType == MediaType.AUDIO,
         videoResolution = if (mediaType == MediaType.VIDEO) resolutionCode else 0,
-        formatIdString = base.formatIdString,
+        formatIdString = "", // Clear stale format ID to allow yt-dlp to automatically fetch best video + audio streams
         mergeAudioStream = if (mediaType == MediaType.VIDEO) true else base.mergeAudioStream,
         mergeToMkv = if (mediaType == MediaType.VIDEO) false else base.mergeToMkv,
     )

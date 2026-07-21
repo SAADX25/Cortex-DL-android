@@ -45,8 +45,7 @@ android {
         applicationId = "com.cortex.dl"
         minSdk = 24
         targetSdk = 37
-        versionCode = 209_000_400
-        check(versionCode == currentVersionCode)
+        versionCode = currentVersionCode
 
         versionName = baseVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -763,12 +763,11 @@ object DownloadUtil {
         // --max-tries / --retry-wait = resilience against transient network errors
         // --console-log-level=warn = keep logs clean without breaking progress parsing
         val connections = ARIA2C_CONNECTIONS.getInt()
+        val args = "-x $connections -s $connections -k 1M " +
+            "--file-allocation=none --max-tries=5 --retry-wait=2 --console-log-level=warn"
         return this.addOption("--downloader", "http,https,ftp,ftps:libaria2c.so")
-            .addOption(
-                "--external-downloader-args",
-                "aria2c:-x $connections -s $connections -k 1M " +
-                    "--file-allocation=none --max-tries=5 --retry-wait=2 --console-log-level=warn",
-            )
+            .addOption("--external-downloader-args", "libaria2c.so:$args")
+            .addOption("--external-downloader-args", "aria2c:$args")
     }
 
     /**

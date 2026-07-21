@@ -327,9 +327,8 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
         val previousPercentage = lastUiProgressPercentages[id] ?: 0f
 
         val timeElapsed = now - previousTime >= PROGRESS_THROTTLE_MS
-        val progressIncreased = (percentageRaw - previousPercentage) >= 5f
 
-        if (percentageRaw >= 100f || timeElapsed || progressIncreased) {
+        if (percentageRaw >= 100f || timeElapsed) {
             lastUiProgressUpdates[id] = now
             lastUiProgressPercentages[id] = percentageRaw
             downloadState = preState.copy(progress = progress, progressText = cleanText)
