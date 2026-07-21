@@ -92,6 +92,7 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
     // ── Progress tracking ───────────────────────────────────────────────────
     private val resumedProgressMap = ConcurrentHashMap<String, Float>()
     private val lastUiProgressUpdates = ConcurrentHashMap<String, Long>()
+    private val lastUiProgressPercentages = ConcurrentHashMap<String, Float>()
 
     // ── Retry logic ─────────────────────────────────────────────────────────
     private val retryCountMap = ConcurrentHashMap<String, Int>()
@@ -104,7 +105,7 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
         private const val MAX_AUTO_RETRIES = 3
         private const val INITIAL_RETRY_DELAY_MS = 3_000L
         /** Progress updates are throttled to this interval to avoid flooding Compose. */
-        private const val PROGRESS_THROTTLE_MS = 250L
+        private const val PROGRESS_THROTTLE_MS = 1000L
         /** Error messages matching these indicate a transient network issue. */
         private val NETWORK_ERROR_PATTERNS = listOf(
             "Unable to connect", "Connection reset", "timed out",
@@ -322,23 +323,33 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
 
         // Throttle UI updates to avoid flooding Compose recomposition
         val now = System.currentTimeMillis()
-        val previous = lastUiProgressUpdates[id] ?: 0L
-        if (percentageRaw >= 100f || now - previous >= PROGRESS_THROTTLE_MS) {
-            lastUiProgressUpdates[id] = now
-            downloadState = preState.copy(progress = progress, progressText = cleanText)
-        }
+        val previousTime = lastUiProgressUpdates[id] ?: 0L
+        val previousPercentage = lastUiProgressPercentages[id] ?: 0f
 
-        NotificationUtil.notifyProgress(
-            notificationId = notificationId,
-            progress = percentageRaw.toInt(),
-            text = cleanText,
-            title = viewState.title,
-            taskId = id,
-        )
+        val timeElapsed = now - previousTime >= PROGRESS_THROTTLE_MS
+        val progressIncreased = (percentageRaw - previousPercentage) >= 5f
+
+        if (percentageRaw >= 100f || timeElapsed || progressIncreased) {
+            lastUiProgressUpdates[id] = now
+            lastUiProgressPercentages[id] = percentageRaw
+            downloadState = preState.copy(progress = progress, progressText = cleanText)
+
+            val notification = NotificationUtil.notifyProgress(
+                notificationId = notificationId,
+                progress = percentageRaw.toInt(),
+                text = cleanText,
+                title = viewState.title,
+                taskId = id,
+            )
+            if (notification != null) {
+                com.cortex.dl.DownloadService.updateForegroundNotification(notificationId, notification)
+            }
+        }
     }
 
     private fun Task.onDownloadSuccess(pathList: List<String>) {
         lastUiProgressUpdates.remove(id)
+        lastUiProgressPercentages.remove(id)
         retryCountMap.remove(id)
         downloadState = Completed(pathList.firstOrNull())
 

@@ -171,9 +171,9 @@ object NotificationUtil {
         progress: Int = PROGRESS_INITIAL,
         taskId: String? = null,
         text: String? = null,
-    ) {
-        if (!NOTIFICATION.getBoolean()) return
-        if (!startedDownloadNotifications.add(notificationId)) return
+    ): Notification? {
+        if (!NOTIFICATION.getBoolean()) return null
+        startedDownloadNotifications.add(notificationId)
         val pendingIntent =
             taskId?.let {
                 Intent(context.applicationContext, NotificationActionReceiver::class.java)
@@ -218,7 +218,9 @@ object NotificationUtil {
         // Apply smart notification settings for progress notifications
         applySmartNotificationSettings(builder, isProgress = true)
         
-        notificationManager.notify(notificationId, builder.build())
+        val notification = builder.build()
+        notificationManager.notify(notificationId, notification)
+        return notification
     }
 
     fun updateNotification(
