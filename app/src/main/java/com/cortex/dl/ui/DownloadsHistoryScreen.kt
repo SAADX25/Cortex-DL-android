@@ -175,7 +175,7 @@ private fun ActiveDownloadCard(task: Task, state: Task.State, downloader: Downlo
                         Icon(Icons.Filled.Pause, contentDescription = "Pause", tint = CortexCyan)
                     }
                 }
-                IconButton(onClick = { downloader.cancel(task) }) {
+                IconButton(onClick = { downloader.cancel(task); downloader.remove(task) }) {
                     Icon(Icons.Filled.Close, contentDescription = "Cancel", tint = Color(0xFFFF8A80))
                 }
             }

@@ -502,27 +502,38 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
     private fun Task.cancelImpl(): Boolean {
         when (val preState = downloadState) {
             is DownloadState.Cancelable -> {
-                val destroyed = YoutubeDL.destroyProcessById(preState.taskId)
-                if (destroyed) {
-                    preState.job.cancel()
-                    NotificationUtil.cancelNotification(notificationId)
-                    downloadState = Canceled(
-                        action = preState.action,
-                        progress = (preState as? Running)?.progress
-                    )
-                }
-                return destroyed
+                runCatching { YoutubeDL.destroyProcessById(preState.taskId) }
+                preState.job.cancel()
+                NotificationUtil.cancelNotification(notificationId)
+                downloadState = Canceled(
+                    action = preState.action,
+                    progress = (preState as? Running)?.progress
+                )
+                taskStateMap.remove(this)
+                return true
             }
-            Idle -> downloadState = Canceled(action = FetchInfo)
-            ReadyWithInfo -> downloadState = Canceled(action = Download)
+            Idle -> {
+                downloadState = Canceled(action = FetchInfo)
+                taskStateMap.remove(this)
+                return true
+            }
+            ReadyWithInfo -> {
+                downloadState = Canceled(action = Download)
+                taskStateMap.remove(this)
+                return true
+            }
             is Paused -> {
                 NotificationUtil.cancelNotification(notificationId)
                 downloadState = Canceled(action = preState.action, progress = preState.progress)
+                taskStateMap.remove(this)
                 return true
             }
-            else -> return false
+            else -> {
+                NotificationUtil.cancelNotification(notificationId)
+                taskStateMap.remove(this)
+                return true
+            }
         }
-        return true
     }
 
     private fun Task.restartImpl() {
