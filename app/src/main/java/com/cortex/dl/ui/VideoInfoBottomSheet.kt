@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AudioFile
 import androidx.compose.material.icons.outlined.Close
@@ -115,11 +118,42 @@ fun VideoInfoBottomSheet(
                 TypeChip("Video", Icons.Outlined.PlayArrow, mediaType == MediaType.VIDEO, Modifier.weight(1f)) { mediaType = MediaType.VIDEO }
                 TypeChip("Audio only", Icons.Outlined.AudioFile, mediaType == MediaType.AUDIO, Modifier.weight(1f)) { mediaType = MediaType.AUDIO }
             }
+
             if (mediaType == MediaType.VIDEO) {
                 Spacer(Modifier.height(16.dp))
-                FieldLabel("Quality")
-                Selector("${resolution}p", qualityExpanded, { qualityExpanded = true }, { qualityExpanded = false }) {
-                    resolutions.forEach { item -> DropdownMenuItem(text = { Text("${item}p", color = CortexTextPrimary) }, onClick = { resolution = item; qualityExpanded = false }) }
+                FieldLabel("Quality / Resolution")
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    items(resolutions) { item ->
+                        val isSelected = item == resolution
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(
+                                    if (isSelected) Brush.linearGradient(listOf(CortexCyan, CortexBlue))
+                                    else SolidColor(CortexDarkBackground)
+                                )
+                                .border(
+                                    if (isSelected) 0.dp else 1.dp,
+                                    CortexSurfaceBorder,
+                                    RoundedCornerShape(10.dp)
+                                )
+                                .clickable { resolution = item }
+                                .padding(horizontal = 16.dp, vertical = 10.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                text = "${item}p" + if (item >= 1080) " HD" else "",
+                                color = if (isSelected) CortexDarkBackground else CortexTextPrimary,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 13.sp,
+                            )
+                        }
+                    }
                 }
             }
             Spacer(Modifier.height(26.dp))

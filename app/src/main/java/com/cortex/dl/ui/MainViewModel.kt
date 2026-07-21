@@ -3,7 +3,7 @@ package com.cortex.dl.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
+import com.cortex.dl.domain.usecase.FetchVideoInfoUseCase
 import com.cortex.dl.util.DownloadUtil
 import com.cortex.dl.util.VideoInfo
 import kotlinx.coroutines.Dispatchers
@@ -29,34 +29,36 @@ sealed interface MainUiState {
     data class Error(val message: String) : MainUiState
 }
 
-class MainViewModel : ViewModel() {
+class MainViewModel(
+    private val fetchVideoInfoUseCase: FetchVideoInfoUseCase = FetchVideoInfoUseCase()
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<MainUiState>(MainUiState.Idle)
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
+    private val _sharedUrl = MutableStateFlow<String?>(null)
+    val sharedUrl: StateFlow<String?> = _sharedUrl.asStateFlow()
+
+    fun onSharedUrlReceived(url: String) {
+        _sharedUrl.value = url
+        fetchVideoInfo(url)
+    }
+
+    fun clearSharedUrl() {
+        _sharedUrl.value = null
+    }
+
     /**
-     * Validates [url], then fetches video metadata in the background.
+     * Validates [url], then fetches video metadata in the background via Use Case.
      * On success transitions to [MainUiState.ReadyWithInfo].
      * On failure transitions to [MainUiState.Error] — never crashes.
      */
     fun fetchVideoInfo(url: String) {
-        if (url.isBlank()) {
-            _uiState.value = MainUiState.Error("URL is empty. Please enter a valid video URL.")
-            return
-        }
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            _uiState.value = MainUiState.Error("Invalid URL. Must start with http:// or https://")
-            return
-        }
-
         _uiState.value = MainUiState.Loading
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = DownloadUtil.fetchVideoInfoFromUrl(
-                    url = url,
-                    preferences = DownloadUtil.DownloadPreferences.createFromPreferences(),
-                )
+                val result = fetchVideoInfoUseCase(url = url)
                 result
                     .onSuccess { info ->
                         Log.d(TAG, "fetchVideoInfo succeeded: ${info.title}")

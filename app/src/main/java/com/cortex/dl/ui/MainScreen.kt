@@ -81,11 +81,34 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(viewModel: MainViewModel = viewModel(), onNavigateToHistory: () -> Unit = {}) {
     val uiState by viewModel.uiState.collectAsState()
+    val sharedUrl by viewModel.sharedUrl.collectAsState()
     var urlText by rememberSaveable { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val clipboardManager = androidx.compose.ui.platform.LocalClipboardManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    var detectedClipboardUrl by remember { mutableStateOf<String?>(null) }
+    var isBatteryOptIgnored by remember { mutableStateOf(com.cortex.dl.util.PowerUtil.isIgnoringBatteryOptimizations(context)) }
+
+    // Auto-fill shared URL if passed from Intent
+    LaunchedEffect(sharedUrl) {
+        sharedUrl?.let { url ->
+            urlText = url
+            viewModel.clearSharedUrl()
+        }
+    }
+
+    // Auto-detect URL from clipboard on screen load
+    LaunchedEffect(Unit) {
+        clipboardManager.getText()?.text?.let { text ->
+            if ((text.startsWith("http://") || text.startsWith("https://")) && text != urlText) {
+                detectedClipboardUrl = text
+            }
+        }
+    }
 
     // Show error snackbar whenever state is Error
     LaunchedEffect(uiState) {
@@ -141,8 +164,115 @@ fun MainScreen(viewModel: MainViewModel = viewModel(), onNavigateToHistory: () -
                     text = "Advanced Video and Audio Downloader",
                     color = CortexTextSecondary,
                     fontSize = 14.sp,
-                    modifier = Modifier.padding(bottom = 48.dp),
+                    modifier = Modifier.padding(bottom = 24.dp),
                 )
+
+                // ── Clipboard Detected Banner ─────────────────────────────────
+                AnimatedVisibility(
+                    visible = detectedClipboardUrl != null,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
+                    detectedClipboardUrl?.let { link ->
+                        androidx.compose.material3.Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp)
+                                .clip(RoundedCornerShape(14.dp)),
+                            colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = CortexSurface),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, CortexCyan.copy(alpha = 0.6f)),
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 14.dp, vertical = 10.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = "Link detected in clipboard",
+                                        color = CortexCyan,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                    Text(
+                                        text = link,
+                                        color = CortexTextPrimary,
+                                        fontSize = 13.sp,
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                                    )
+                                }
+                                Row {
+                                    androidx.compose.material3.TextButton(
+                                        onClick = {
+                                            urlText = link
+                                            detectedClipboardUrl = null
+                                            viewModel.fetchVideoInfo(link)
+                                        }
+                                    ) {
+                                        Text("Paste & Fetch", color = CortexCyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                                    }
+                                    androidx.compose.material3.IconButton(
+                                        onClick = { detectedClipboardUrl = null },
+                                        modifier = Modifier.size(28.dp)
+                                    ) {
+                                        Icon(Icons.Default.Clear, contentDescription = "Dismiss", tint = CortexTextSecondary)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // ── Battery Optimization Prompt Card ──────────────────────────
+                AnimatedVisibility(
+                    visible = !isBatteryOptIgnored,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
+                    androidx.compose.material3.Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                            .clip(RoundedCornerShape(14.dp)),
+                        colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 14.dp, vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "Enable Background Downloads",
+                                    color = CortexTextPrimary,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                                Text(
+                                    text = "Exempt app from battery saver for uninterrupted downloads.",
+                                    color = CortexTextSecondary,
+                                    fontSize = 11.sp,
+                                )
+                            }
+                            androidx.compose.material3.Button(
+                                onClick = {
+                                    com.cortex.dl.util.PowerUtil.requestIgnoreBatteryOptimizations(context)
+                                    isBatteryOptIgnored = true
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = CortexBlue),
+                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                                shape = RoundedCornerShape(8.dp),
+                            ) {
+                                Text("Enable", color = CortexTextPrimary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+                }
 
                 // ── URL input field ────────────────────────────────────────────
                 Box(

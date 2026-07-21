@@ -45,12 +45,47 @@ import com.cortex.dl.util.PreferenceUtil.getBoolean
 import com.cortex.dl.util.PreferenceUtil.updateBoolean
 import java.util.Locale
 
+import android.content.Intent
+import androidx.activity.viewModels
+import com.cortex.dl.ui.MainViewModel
+
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        handleIncomingIntent(intent)
         setContent { CortexTheme { AppEntry() } }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIncomingIntent(intent)
+    }
+
+    private fun handleIncomingIntent(intent: Intent?) {
+        if (intent == null) return
+        val action = intent.action
+        val type = intent.type
+
+        val sharedUrl = when {
+            Intent.ACTION_SEND == action && type == "text/plain" -> {
+                intent.getStringExtra(Intent.EXTRA_TEXT)
+            }
+            Intent.ACTION_VIEW == action -> {
+                intent.dataString
+            }
+            else -> null
+        }
+
+        sharedUrl?.takeIf { it.contains("http") }?.let { text ->
+            val extractedUrl = text.split("\\s+".toRegex()).find { it.startsWith("http://") || it.startsWith("https://") } ?: text
+            viewModel.onSharedUrlReceived(extractedUrl)
+        }
     }
 }
 
