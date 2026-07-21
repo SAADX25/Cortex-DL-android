@@ -145,6 +145,7 @@ class App : Application(), SingletonImageLoader.Factory {
                     }
                 }
                 UpdateUtil.deleteOutdatedApk()
+                runCatching { FileUtil.cleanStaleTempFiles() }
             } catch (e: com.yausername.youtubedl_android.YoutubeDLException) {
                 withContext(Dispatchers.Main) { startCrashReportActivity(e) }
             } catch (th: Throwable) {

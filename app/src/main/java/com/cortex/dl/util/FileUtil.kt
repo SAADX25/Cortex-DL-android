@@ -250,6 +250,22 @@ object FileUtil {
             createEmptyFile(".nomedia")
         }
 
+    /**
+     * Cleans up temporary/partial download files older than [maxAgeMillis] (default 24 hours).
+     */
+    fun cleanStaleTempFiles(maxAgeMillis: Long = 24 * 60 * 60 * 1000L) {
+        runCatching {
+            val now = System.currentTimeMillis()
+            getExternalTempDir().listFiles()?.forEach { file ->
+                if (file.isFile && shouldDeleteTempFile(file.name)) {
+                    if (now - file.lastModified() > maxAgeMillis) {
+                        file.delete()
+                    }
+                }
+            }
+        }
+    }
+
     fun getExternalTempDir(child: String?): File =
         getExternalTempDir().run {
             child?.takeIf { it.isNotBlank() }?.let { resolve(it).also { dir -> dir.mkdirs() } }
