@@ -104,8 +104,8 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
     companion object {
         private const val MAX_AUTO_RETRIES = 3
         private const val INITIAL_RETRY_DELAY_MS = 3_000L
-        /** Progress updates are throttled to this interval to avoid flooding Compose. */
-        private const val PROGRESS_THROTTLE_MS = 1000L
+        /** Progress updates are throttled to this interval (4 fps) to keep UI smooth without flooding Compose. */
+        private const val PROGRESS_THROTTLE_MS = 250L
         /** Error messages matching these indicate a transient network issue. */
         private val NETWORK_ERROR_PATTERNS = listOf(
             "Unable to connect", "Connection reset", "timed out",

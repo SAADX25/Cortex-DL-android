@@ -135,6 +135,10 @@ android {
     }
     androidResources { generateLocaleConfig = true }
 
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
     namespace = "com.cortex.dl"
 }
 
