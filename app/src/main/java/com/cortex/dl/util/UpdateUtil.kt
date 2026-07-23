@@ -66,23 +66,38 @@ object UpdateUtil {
 
     suspend fun updateYtDlp(): YoutubeDL.UpdateStatus? =
         withContext(Dispatchers.IO) {
-            val channel =
+            val primaryChannel =
                 when (YT_DLP_UPDATE_CHANNEL.getInt()) {
                     YT_DLP_NIGHTLY -> YoutubeDL.UpdateChannel.NIGHTLY
                     else -> YoutubeDL.UpdateChannel.STABLE
                 }
 
-            YoutubeDL.getInstance()
-                .updateYoutubeDL(appContext = context, updateChannel = channel)
-                .also {
-                    if (it == YoutubeDL.UpdateStatus.DONE) {
-                        YoutubeDL.getInstance().version(context)?.let {
-                            PreferenceUtil.encodeString(YT_DLP_VERSION, it)
-                        }
-                    }
-                    val now = System.currentTimeMillis()
-                    YT_DLP_UPDATE_TIME.updateLong(now)
+            val fallbackChannel =
+                if (primaryChannel == YoutubeDL.UpdateChannel.NIGHTLY)
+                    YoutubeDL.UpdateChannel.STABLE
+                else
+                    YoutubeDL.UpdateChannel.NIGHTLY
+
+            val status = runCatching {
+                YoutubeDL.getInstance().updateYoutubeDL(appContext = context, updateChannel = primaryChannel)
+            }.getOrElse { primaryError ->
+                Log.w(TAG, "Failed updating yt-dlp on primary channel ($primaryChannel), trying fallback channel ($fallbackChannel)", primaryError)
+                try {
+                    YoutubeDL.getInstance().updateYoutubeDL(appContext = context, updateChannel = fallbackChannel)
+                } catch (fallbackError: Exception) {
+                    Log.e(TAG, "Failed updating yt-dlp on fallback channel ($fallbackChannel)", fallbackError)
+                    throw fallbackError
                 }
+            }
+
+            YoutubeDL.getInstance().version(context)?.let { ver ->
+                PreferenceUtil.encodeString(YT_DLP_VERSION, ver)
+            }
+
+            val now = System.currentTimeMillis()
+            YT_DLP_UPDATE_TIME.updateLong(now)
+
+            status
         }
 
     private fun getLatestRelease(): Release =

@@ -55,7 +55,9 @@ import com.cortex.dl.ui.theme.CortexDarkBackground
 import com.cortex.dl.ui.theme.CortexSurface
 import com.cortex.dl.ui.theme.CortexTextPrimary
 import com.cortex.dl.ui.theme.CortexTextSecondary
+import com.cortex.dl.util.PreferenceUtil
 import com.cortex.dl.util.PreferenceUtil.getString
+import com.cortex.dl.util.PreferenceUtil.encodeString
 import com.cortex.dl.util.VIDEO_DIRECTORY
 import com.cortex.dl.util.YT_DLP_VERSION
 import com.cortex.dl.util.UpdateUtil
@@ -134,13 +136,23 @@ fun SettingsScreen() {
                 scope.launch {
                     val message = runCatching { UpdateUtil.updateYtDlp() }.fold(
                         onSuccess = { status ->
+                            val currentVer = YoutubeDL.getInstance().version(context) ?: ""
+                            if (currentVer.isNotEmpty()) {
+                                PreferenceUtil.encodeString(YT_DLP_VERSION, currentVer)
+                            }
                             when (status) {
-                                YoutubeDL.UpdateStatus.DONE -> "Download engine updated successfully"
-                                YoutubeDL.UpdateStatus.ALREADY_UP_TO_DATE -> "Download engine is already up to date"
+                                YoutubeDL.UpdateStatus.DONE -> "Download engine updated successfully ($currentVer)"
+                                YoutubeDL.UpdateStatus.ALREADY_UP_TO_DATE -> "Download engine is already up to date ($currentVer)"
                                 else -> "The download engine could not be updated"
                             }
                         },
-                        onFailure = { "Could not update the download engine. Check your connection and try again." },
+                        onFailure = { error ->
+                            val currentVer = YoutubeDL.getInstance().version(context) ?: ""
+                            if (currentVer.isNotEmpty()) {
+                                PreferenceUtil.encodeString(YT_DLP_VERSION, currentVer)
+                            }
+                            "Could not update the download engine: ${error.localizedMessage ?: "Check your connection and try again."}"
+                        },
                     )
                     android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_LONG).show()
                     isUpdating = false

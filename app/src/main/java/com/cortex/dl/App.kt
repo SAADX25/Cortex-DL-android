@@ -129,6 +129,11 @@ class App : Application(), SingletonImageLoader.Factory {
                 YoutubeDL.init(this@App)
                 FFmpeg.init(this@App)
                 Aria2c.init(this@App)
+                runCatching {
+                    YoutubeDL.getInstance().version(this@App)?.let { version ->
+                        PreferenceUtil.encodeString(YT_DLP_VERSION, version)
+                    }
+                }
                 // Keep the extractor engine current before the user can enqueue a download.
                 // This is intentionally best-effort: a failed network check must never block
                 // opening the application or using the bundled version offline.
