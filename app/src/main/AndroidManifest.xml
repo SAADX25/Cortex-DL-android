@@ -43,6 +43,12 @@
             android:label="CrashReportActivity"
             android:theme="@style/Theme.CortexDL" />
 
+        <activity
+            android:name=".PlayerActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="false"
+            android:theme="@style/Theme.CortexDL" />
+
         <service
             android:name=".DownloadService"
             android:enabled="true"

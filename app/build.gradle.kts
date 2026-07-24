@@ -148,7 +148,13 @@ kotlin {
     jvmToolchain(21)
     
     compilerOptions {
-        freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs.addAll(
+            listOf(
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                "-opt-in=androidx.media3.common.util.UnstableApi",
+            ),
+        )
     }
 }
 
@@ -194,4 +200,7 @@ dependencies {
     
     // Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // Media3 ExoPlayer for in-app video playback
+    implementation(libs.bundles.media3)
 }

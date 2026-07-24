@@ -215,8 +215,12 @@ private fun CompletedDownloadCard(
                 Text(info.videoAuthor, color = CortexTextSecondary, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
             IconButton(onClick = {
-                FileUtil.openFile(info.videoPath) {
-                    android.widget.Toast.makeText(context, errorMessage, android.widget.Toast.LENGTH_SHORT).show()
+                if (java.io.File(info.videoPath).exists()) {
+                    com.cortex.dl.PlayerActivity.start(context, info.videoPath, info.videoTitle)
+                } else {
+                    FileUtil.openFile(info.videoPath) {
+                        android.widget.Toast.makeText(context, errorMessage, android.widget.Toast.LENGTH_SHORT).show()
+                    }
                 }
             }) { Icon(Icons.Filled.PlayArrow, contentDescription = stringResource(R.string.open_file), tint = CortexCyan) }
             IconButton(onClick = onDelete) { Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.delete), tint = Color(0xFFFF8A80)) }
