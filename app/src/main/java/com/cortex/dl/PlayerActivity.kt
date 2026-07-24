@@ -1,8 +1,13 @@
 package com.cortex.dl
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -62,6 +67,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerNotificationManager
 import androidx.media3.ui.PlayerView
 import com.cortex.dl.ui.theme.CortexCyan
 import com.cortex.dl.ui.theme.CortexDarkBackground

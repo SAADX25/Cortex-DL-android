@@ -249,7 +249,7 @@
     <string name="embed_subtitles_mkv_msg">لتضمين الترجمات، سيتم إعادة صاغية مقاطع الفيديو بصيغة mkv. يمكنك استخدام مشغل VLC أو تطبيقات متوافقة أخرى لمشاهدة مقاطع الفيديو مع الترجمة المضمنة.</string>
     <string name="filesize_mb">%.2f م.ب</string>
     <string name="filesize_gb">%.2f ج.ب</string>
-    <string name="share">شارك</string>
+    <string name="share">مشاركة</string>
     <string name="stable_channel">المستقرة</string>
     <string name="pre_release_channel">المعاينة</string>
     <string name="update_channel_desc">قم بتثبيت الإصدارات التجريبية لمعاينة الميزات والتغييرات الجديدة.

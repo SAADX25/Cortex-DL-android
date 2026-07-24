@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -223,6 +224,15 @@ private fun CompletedDownloadCard(
                     }
                 }
             }) { Icon(Icons.Filled.PlayArrow, contentDescription = stringResource(R.string.open_file), tint = CortexCyan) }
+            IconButton(onClick = {
+                if (java.io.File(info.videoPath).exists()) {
+                    FileUtil.shareFile(context, info.videoPath) {
+                        android.widget.Toast.makeText(context, errorMessage, android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    android.widget.Toast.makeText(context, errorMessage, android.widget.Toast.LENGTH_SHORT).show()
+                }
+            }) { Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.share), tint = CortexCyan) }
             IconButton(onClick = onDelete) { Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.delete), tint = Color(0xFFFF8A80)) }
         }
     }

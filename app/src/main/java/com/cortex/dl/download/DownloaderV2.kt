@@ -27,7 +27,6 @@ import com.cortex.dl.download.Task.PauseReason
 import com.cortex.dl.util.DownloadUtil
 import com.cortex.dl.util.FileUtil
 import com.cortex.dl.util.MAX_CONCURRENT_DOWNLOADS
-import com.cortex.dl.util.NotificationUtil
 import com.cortex.dl.util.PreferenceUtil
 import com.cortex.dl.util.PreferenceUtil.getInt
 import com.cortex.dl.util.VideoInfo
@@ -333,16 +332,7 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
             lastUiProgressPercentages[id] = percentageRaw
             downloadState = preState.copy(progress = progress, progressText = cleanText)
 
-            val notification = NotificationUtil.notifyProgress(
-                notificationId = notificationId,
-                progress = percentageRaw.toInt(),
-                text = cleanText,
-                title = viewState.title,
-                taskId = id,
-            )
-            if (notification != null) {
-                com.cortex.dl.DownloadService.updateForegroundNotification(notificationId, notification)
-            }
+
         }
     }
 
@@ -356,16 +346,7 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
             if (pathList.isEmpty()) R.string.status_completed
             else R.string.download_finish_notification
         )
-        FileUtil.createIntentForOpeningFile(pathList.firstOrNull()).run {
-            NotificationUtil.finishNotification(
-                notificationId,
-                title = viewState.title,
-                text = text,
-                intent = if (this != null)
-                    PendingIntent.getActivity(appContext, 0, this, PendingIntent.FLAG_IMMUTABLE)
-                else null,
-            )
-        }
+
         if (preferences.downloadDocs && info != null) {
             DownloadUtil.writeDocsTextFile(info!!)
         }
@@ -386,12 +367,7 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
             return
         }
         downloadState = Error(throwable = throwable, action = FetchInfo)
-        NotificationUtil.notifyError(
-            title = viewState.title,
-            textId = R.string.fetch_info_error_msg,
-            notificationId = notificationId,
-            report = throwable.message ?: "Unknown error",
-        )
+
     }
 
     private fun Task.handleDownloadError(throwable: Throwable) {
@@ -428,13 +404,6 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
             else -> {
                 retryCountMap.remove(id)
                 downloadState = Error(throwable = throwable, action = Download)
-                NotificationUtil.notifyError(
-                    title = viewState.title,
-                    textId = R.string.download_error_msg,
-                    notificationId = notificationId,
-                    report = throwable.message ?: "Unknown error",
-                    errorMessage = throwable.message ?: "Unknown error",
-                )
             }
         }
     }
@@ -451,11 +420,7 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
         } else {
             downloadState = Paused(action = action, progress = progress, reason = PauseReason.Network)
         }
-        NotificationUtil.updateNotification(
-            notificationId = notificationId,
-            title = viewState.title,
-            text = appContext.getString(R.string.status_paused),
-        )
+
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -477,11 +442,7 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
         if (destroyed) {
             preState.job.cancel()
             val progress = (preState as? Running)?.progress
-            NotificationUtil.updateNotification(
-                notificationId = notificationId,
-                title = viewState.title,
-                text = appContext.getString(R.string.status_paused),
-            )
+
             downloadState = Paused(action = preState.action, progress = progress, reason = reason)
         }
         return destroyed
@@ -504,7 +465,6 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
             is DownloadState.Cancelable -> {
                 runCatching { YoutubeDL.destroyProcessById(preState.taskId) }
                 preState.job.cancel()
-                NotificationUtil.cancelNotification(notificationId)
                 downloadState = Canceled(
                     action = preState.action,
                     progress = (preState as? Running)?.progress
@@ -523,13 +483,11 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
                 return true
             }
             is Paused -> {
-                NotificationUtil.cancelNotification(notificationId)
                 downloadState = Canceled(action = preState.action, progress = preState.progress)
                 taskStateMap.remove(this)
                 return true
             }
             else -> {
-                NotificationUtil.cancelNotification(notificationId)
                 taskStateMap.remove(this)
                 return true
             }
@@ -560,33 +518,14 @@ class DownloaderV2Impl(private val appContext: Context) : DownloaderV2, KoinComp
                 val preState = downloadState
                 if (preState is Running) {
                     downloadState = preState.copy(progress = progress, progressText = text)
-                    NotificationUtil.makeNotificationForCustomCommand(
-                        notificationId = notificationId,
-                        taskId = id,
-                        progress = pct.toInt(),
-                        templateName = template.name,
-                        taskUrl = url,
-                        text = text,
-                    )
+
                 }
             }.onFailure { throwable ->
                 if (throwable is YoutubeDL.CanceledException) return@onFailure
                 downloadState = Error(throwable = throwable, action = Download)
-                NotificationUtil.notifyError(
-                    title = viewState.title,
-                    textId = R.string.download_error_msg,
-                    notificationId = notificationId,
-                    report = throwable.message ?: "Unknown error",
-                    errorMessage = throwable.message ?: "Unknown error",
-                )
             }.onSuccess {
                 downloadState = Completed(null)
-                NotificationUtil.finishNotification(
-                    notificationId = notificationId,
-                    title = viewState.title,
-                    text = appContext.getString(R.string.status_completed),
-                    intent = null,
-                )
+
             }
         }.also { downloadState = Running(job = it, taskId = id) }
     }

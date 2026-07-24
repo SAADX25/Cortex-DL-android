@@ -56,6 +56,19 @@ object FileUtil {
             }
             .onFailure { onFailureCallback(it) }
 
+    inline fun shareFile(context: Context, path: String, onFailureCallback: (Throwable) -> Unit = {}) =
+        path
+            .runCatching {
+                createIntentForSharingFile(this)?.let { intent ->
+                    val chooser = Intent.createChooser(intent, context.getString(R.string.share)).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    context.startActivity(chooser)
+                } ?: throw Exception()
+            }
+            .onFailure { onFailureCallback(it) }
+
+
     private fun createIntentForFile(path: String?): Intent? {
         if (path == null) return null
 

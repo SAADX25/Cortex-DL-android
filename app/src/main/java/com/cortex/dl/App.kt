@@ -30,7 +30,6 @@ import com.cortex.dl.util.FileUtil.createEmptyFile
 import com.cortex.dl.util.FileUtil.getCookiesFile
 import com.cortex.dl.util.FileUtil.getExternalDownloadDirectory
 import com.cortex.dl.util.FileUtil.getExternalPrivateDownloadDirectory
-import com.cortex.dl.util.NotificationUtil
 import com.cortex.dl.util.PreferenceUtil
 import com.cortex.dl.util.PreferenceUtil.getString
 import com.cortex.dl.util.PreferenceUtil.updateString
@@ -63,13 +62,6 @@ enum class Directory { VIDEO, AUDIO, CUSTOM_COMMAND, SDCARD }
 
 class App : Application(), SingletonImageLoader.Factory {
 
-    /**
-     * Coil 3 does NOT bundle a network fetcher by default — without an explicit network
-     * component every remote image (e.g. video thumbnails) silently fails to load, leaving
-     * blank poster areas in the format/configure screens. We register the OkHttp fetcher and
-     * attach a desktop browser User-Agent so thumbnail CDNs that reject the default client
-     * (returning 403) still serve the image.
-     */
     override fun newImageLoader(context: PlatformContext): ImageLoader {
         val callFactory = {
             OkHttpClient.Builder()
@@ -134,16 +126,9 @@ class App : Application(), SingletonImageLoader.Factory {
                         PreferenceUtil.encodeString(YT_DLP_VERSION, version)
                     }
                 }
-                // Keep the extractor engine current before the user can enqueue a download.
-                // This is intentionally best-effort: a failed network check must never block
-                // opening the application or using the bundled version offline.
                 if (YT_DLP_AUTO_UPDATE.getBoolean()) {
                     runCatching { UpdateUtil.updateYtDlp() }
                 }
-                // Pre-build the Netscape cookie file so it exists before the first
-                // download. Wrapped in runCatching so a disk-full IOException here
-                // does NOT propagate into the catch(Throwable) block above and
-                // accidentally show the crash-report screen on the first app launch.
                 runCatching {
                     DownloadUtil.getCookiesContentFromDatabase().getOrNull()?.let {
                         FileUtil.writeContentToFile(it, getCookiesFile())
@@ -164,7 +149,6 @@ class App : Application(), SingletonImageLoader.Factory {
         if (!PreferenceUtil.containsKey(COMMAND_DIRECTORY)) {
             COMMAND_DIRECTORY.updateString(videoDownloadDir)
         }
-        if (Build.VERSION.SDK_INT >= 26) NotificationUtil.createNotificationChannel()
 
         Thread.setDefaultUncaughtExceptionHandler { _, e ->
             try {
@@ -213,7 +197,6 @@ class App : Application(), SingletonImageLoader.Factory {
                 }
 
                 override fun onServiceDisconnected(arg0: ComponentName) {
-                    // OS killed the service unexpectedly — allow startService() to restart it.
                     isServiceRunning = false
                 }
             }
@@ -243,82 +226,45 @@ class App : Application(), SingletonImageLoader.Factory {
             }
         }
 
+        @SuppressLint("DiscouragedApi")
+        fun getVersionReport(): String {
+            return "App Version: ${packageInfo.versionName} (${packageInfo.versionCode})\n" +
+                "Android Version: ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})\n" +
+                "Device: ${Build.MANUFACTURER} ${Build.MODEL}\n" +
+                "Supported ABIs: ${Build.SUPPORTED_ABIS.joinToString()}"
+        }
+
         val privateDownloadDir: String
-            get() =
-                getExternalPrivateDownloadDirectory().run {
-                    createEmptyFile(".nomedia")
-                    absolutePath
-                }
+            get() = getExternalPrivateDownloadDirectory().absolutePath
 
-        fun updateDownloadDir(uri: Uri, directoryType: Directory) {
-            when (directoryType) {
-                Directory.AUDIO -> {
-                    if (!FileUtil.isPrimaryStorageUri(uri)) {
-                        context.makeToast(R.string.directory_not_supported)
-                        return
-                    }
-                    val path = FileUtil.getRealPath(uri)
-                    audioDownloadDir = path
-                    PreferenceUtil.encodeString(AUDIO_DIRECTORY, path)
-                }
+        fun isDebugBuild(): Boolean {
+            return ((packageInfo.applicationInfo?.flags ?: 0) and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0
+        }
 
+        fun updateDownloadDir(uri: Uri, directory: Directory) {
+            val contentResolver = context.contentResolver
+            val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            runCatching { contentResolver.takePersistableUriPermission(uri, takeFlags) }
+            val path = FileUtil.getRealPath(uri)
+            when (directory) {
                 Directory.VIDEO -> {
-                    if (!FileUtil.isPrimaryStorageUri(uri)) {
-                        context.makeToast(R.string.directory_not_supported)
-                        return
-                    }
-                    val path = FileUtil.getRealPath(uri)
+                    VIDEO_DIRECTORY.updateString(path)
                     videoDownloadDir = path
-                    PreferenceUtil.encodeString(VIDEO_DIRECTORY, path)
                 }
-
+                Directory.AUDIO -> {
+                    AUDIO_DIRECTORY.updateString(path)
+                    audioDownloadDir = path
+                }
                 Directory.CUSTOM_COMMAND -> {
-                    if (!FileUtil.isPrimaryStorageUri(uri)) {
-                        context.makeToast(R.string.directory_not_supported)
-                        return
-                    }
-                    val path = FileUtil.getRealPath(uri)
-                    PreferenceUtil.encodeString(COMMAND_DIRECTORY, path)
+                    COMMAND_DIRECTORY.updateString(path)
                 }
-
                 Directory.SDCARD -> {
-                    context.contentResolver?.takePersistableUriPermission(
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
-                    )
-                    PreferenceUtil.encodeString(SDCARD_URI, uri.toString())
+                    SDCARD_URI.updateString(uri.toString())
                 }
             }
         }
 
-        fun getVersionReport(): String {
-            val versionName = packageInfo.versionName
-            val page = packageInfo
-            val versionCode =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    packageInfo.longVersionCode
-                } else {
-                    packageInfo.versionCode.toLong()
-                }
-            val release =
-                if (Build.VERSION.SDK_INT >= 30) {
-                    Build.VERSION.RELEASE_OR_CODENAME
-                } else {
-                    Build.VERSION.RELEASE
-                }
-            return StringBuilder()
-                .append("App version: $versionName ($versionCode)\n")
-                .append("Device information: Android $release (API ${Build.VERSION.SDK_INT})\n")
-                .append("Supported ABIs: ${Build.SUPPORTED_ABIS.contentToString()}\n")
-                .append("Yt-dlp version: ${YT_DLP_VERSION.getString()}\n")
-                .toString()
-        }
-
-
-        fun isDebugBuild(): Boolean = BuildConfig.DEBUG
-
-        @SuppressLint("StaticFieldLeak") lateinit var context: Context
+        @SuppressLint("StaticFieldLeak")
+        lateinit var context: Context
     }
 }
-
